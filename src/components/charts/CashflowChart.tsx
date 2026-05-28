@@ -40,7 +40,7 @@ export function CashflowChart() {
           <CardTitle className="text-base">Cashflow Entwicklung</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px] min-h-[300px]">
+          <div className="h-[300px] min-h-[300px] min-w-0">
             {data.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%" minHeight={300}>
                 <AreaChart data={data}>
