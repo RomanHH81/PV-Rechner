@@ -14,7 +14,7 @@ import { ProductionChart } from "@/components/charts/ProductionChart";
 import { CashflowChart } from "@/components/charts/CashflowChart";
 
 export default function DashboardPage() {
-  const { calculate, simulationResult } = useSimulationStore();
+  const { calculate, simulationResult, darkMode } = useSimulationStore();
 
   useAutoCalculate();
 
@@ -25,13 +25,19 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 selection:bg-emerald-500/30">
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        darkMode ? "bg-slate-950 text-white" : "bg-white text-slate-950"
+      } selection:bg-emerald-500/30`}
+    >
       {/* Background Effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[100px]" />
-        <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-emerald-400/5 blur-[150px]" />
-      </div>
+      {darkMode && (
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[100px]" />
+          <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-emerald-400/5 blur-[150px]" />
+        </div>
+      )}
 
       <Header />
 
@@ -42,8 +48,8 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h2 className="text-2xl font-bold text-white">Dashboard</h2>
-          <p className="text-sm text-white/50 mt-1">
+          <h2 className="text-2xl font-bold">Dashboard</h2>
+          <p className="text-sm opacity-50 mt-1">
             PV-Wirtschaftlichkeitsanalyse – alle Werte reagieren in Echtzeit
           </p>
         </motion.div>
