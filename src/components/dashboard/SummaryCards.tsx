@@ -29,7 +29,7 @@ const item = {
 };
 
 export function SummaryCards() {
-  const { simulationResult, simulationRunning, districtHeating, heatPump } =
+  const { simulationResult, simulationRunning, districtHeating, heatPump, darkMode } =
     useSimulationStore();
   const s = simulationResult?.summary;
 
@@ -37,8 +37,8 @@ export function SummaryCards() {
     return (
       <div className="col-span-full flex items-center justify-center py-20">
         <div className="text-center">
-          <BarChart3 className="mx-auto h-12 w-12 text-white/20 mb-4" />
-          <p className="text-white/40 text-sm">
+          <BarChart3 className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+          <p className="text-muted-foreground text-sm">
             Konfiguriere deine PV-Anlage und starte die Berechnung
           </p>
         </div>
@@ -145,7 +145,7 @@ export function SummaryCards() {
   return (
     <div className="relative">
       {simulationRunning && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm rounded-xl">
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-background/60 backdrop-blur-sm rounded-xl">
           <div className="flex flex-col items-center gap-2">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
           </div>
@@ -155,32 +155,34 @@ export function SummaryCards() {
         variants={container}
         initial="hidden"
         animate="show"
-        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-opacity duration-200 ${
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 transition-opacity duration-200 ${
           simulationRunning ? "opacity-50" : "opacity-100"
         }`}
       >
         {cards.map((card, i) => (
           <motion.div key={i} variants={item}>
-            <Card className="group hover:border-white/20 transition-all duration-300 cursor-default">
-              <CardContent className="p-5">
-                <div className="flex items-start justify-between mb-3">
+            <Card className="group hover:border-primary/20 transition-all duration-300 cursor-default">
+              <CardContent className="p-3 md:p-5">
+                <div className="flex items-start justify-between mb-2 md:mb-3">
                   <div
-                    className={`rounded-xl p-2.5 ${card.iconBg} border border-white/5`}
+                    className={`rounded-xl p-2 md:p-2.5 ${card.iconBg} border border-border`}
                   >
                     <card.icon
-                      className={`h-5 w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                      className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
                     />
                   </div>
                 </div>
-                <p className="text-xs font-medium text-white/50 uppercase tracking-wider mb-1">
+                <p className="text-[10px] md:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5 md:mb-1">
                   {card.label}
                 </p>
                 <p
-                  className={`text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
+                  className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
                 >
                   {card.value}
                 </p>
-                <p className="text-xs text-white/40 mt-1">{card.sub}</p>
+                <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 md:mt-1">
+                  {card.sub}
+                </p>
               </CardContent>
             </Card>
           </motion.div>
