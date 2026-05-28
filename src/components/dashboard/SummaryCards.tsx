@@ -1,0 +1,194 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  Sun,
+  Battery,
+  Euro,
+  TrendingUp,
+  Home,
+  BarChart3,
+  Clock,
+  Zap,
+  Flame,
+} from "lucide-react";
+import { useSimulationStore } from "@/store/useSimulationStore";
+import { Card, CardContent } from "@/components/ui/card";
+import { formatCurrency, formatNumber } from "@/lib/utils";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
+export function SummaryCards() {
+  const { simulationResult, simulationRunning, districtHeating, heatPump } =
+    useSimulationStore();
+  const s = simulationResult?.summary;
+
+  if (simulationRunning) {
+    return (
+      <div className="col-span-full flex items-center justify-center py-20">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+          <p className="text-sm text-white/50">
+            Berechne Wirtschaftlichkeit...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!s) {
+    return (
+      <div className="col-span-full flex items-center justify-center py-20">
+        <div className="text-center">
+          <BarChart3 className="mx-auto h-12 w-12 text-white/20 mb-4" />
+          <p className="text-white/40 text-sm">
+            Konfiguriere deine PV-Anlage und starte die Berechnung
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Merge production + self consumption into one card
+  const savingsFromSelfUse = s.selfConsumption * (30 / 100);
+  const isDistrict = districtHeating.enabled;
+  const isHeatpump = heatPump.enabled;
+
+  // Heating savings: Fernwärme vs Wärmepumpe
+  const heatingSavings = s.heatingCostsDistrict - s.heatingCostsHeatpump;
+  const heatingSavingsMonthly = heatingSavings / 12;
+
+  const cards = [
+    {
+      icon: Sun,
+      label: "Produktion & Eigenverbrauch",
+      value: `${formatNumber(s.yearlyProduction, 0)} kWh`,
+      sub: `Eigenverbrauch: ${formatNumber(s.selfConsumption, 0)} kWh (${formatNumber(s.selfConsumptionRate, 1)}%)`,
+      color: "from-amber-400 to-emerald-500",
+      iconBg: "bg-emerald-500/20",
+      double: true,
+    },
+    {
+      icon: Battery,
+      label: "Autarkiegrad",
+      value: `${formatNumber(Math.min(s.autarkyRate, 100), 1)}%`,
+      sub: `${formatNumber(s.gridPurchase, 0)} kWh / Jahr Netzbezug`,
+      color: "from-blue-400 to-cyan-500",
+      iconBg: "bg-blue-500/20",
+    },
+    {
+      icon: Euro,
+      label: "Stromkosten-Ersparnis",
+      value: formatCurrency(savingsFromSelfUse),
+      sub: `${formatNumber(s.selfConsumption, 0)} kWh × 30 Cent/kWh`,
+      color: "from-emerald-400 to-teal-500",
+      iconBg: "bg-emerald-500/20",
+    },
+    {
+      icon: Zap,
+      label: "Einspeisevergütung",
+      value: formatCurrency(s.feedInRevenue),
+      sub: `${formatNumber(s.gridFeedIn, 0)} kWh eingespeist`,
+      color: "from-violet-400 to-purple-500",
+      iconBg: "bg-violet-500/20",
+    },
+    {
+      icon: TrendingUp,
+      label: "Stromkosten (mit PV)",
+      value: formatCurrency(s.electricityCostsWithPV),
+      sub: `Ohne PV: ${formatCurrency(s.electricityCostsWithoutPV)}`,
+      color: "from-orange-400 to-amber-500",
+      iconBg: "bg-orange-500/20",
+    },
+    {
+      icon: Flame,
+      label: "Heizkosten",
+      value: formatCurrency(
+        isDistrict
+          ? s.heatingCostsDistrict
+          : isHeatpump
+            ? s.heatingCostsHeatpump
+            : 0,
+      ),
+      sub:
+        isDistrict && heatingSavings > 0
+          ? `Mit WP: ${formatCurrency(s.heatingCostsHeatpump)} (${formatCurrency(heatingSavingsMonthly)}/Monat gespart)`
+          : isHeatpump
+            ? `Gegenüber FW: ${formatCurrency(heatingSavings)}/Jahr günstiger`
+            : districtHeating.enabled
+              ? "Fernwärme aktiv"
+              : heatPump.enabled
+                ? "Wärmepumpe aktiv"
+                : "Kein Heizsystem aktiv",
+      color: "from-rose-400 to-orange-500",
+      iconBg: "bg-rose-500/20",
+    },
+    {
+      icon: Euro,
+      label: "Cashflow (20 Jahre)",
+      value: formatCurrency(s.cumulativeCashflow20y),
+      sub: `Investition: ${formatCurrency(s.totalInvestment)}`,
+      color: "from-emerald-400 to-green-500",
+      iconBg: "bg-green-500/20",
+    },
+    {
+      icon: Clock,
+      label: "Amortisation",
+      value:
+        s.paybackPeriod > 0 ? `${formatNumber(s.paybackPeriod, 1)} Jahre` : "—",
+      sub:
+        s.breakEvenYear > 0
+          ? `Break-Even im Jahr ${s.breakEvenYear}`
+          : "Kein Break-Even in 20 J.",
+      color: "from-emerald-400 to-emerald-600",
+      iconBg: "bg-emerald-500/20",
+    },
+  ];
+
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+    >
+      {cards.map((card, i) => (
+        <motion.div key={i} variants={item}>
+          <Card className="group hover:border-white/20 transition-all duration-300 cursor-default">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between mb-3">
+                <div
+                  className={`rounded-xl p-2.5 ${card.iconBg} border border-white/5`}
+                >
+                  <card.icon
+                    className={`h-5 w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider mb-1">
+                {card.label}
+              </p>
+              <p
+                className={`text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
+              >
+                {card.value}
+              </p>
+              <p className="text-xs text-white/40 mt-1">{card.sub}</p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}

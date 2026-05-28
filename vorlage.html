@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PV Rechner Clean</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{--bg:#f4f7fb;--surface:rgba(255,255,255,.92);--surface-strong:#fff;--surface-muted:#eef3f8;--border:rgba(15,23,42,.12);--text:#0f172a;--muted:#5b6474;--primary:#0f766e;--primary-2:#0891b2;--slider-track:#06b6d4;--slider-thumb:#06b6d4;--slider-thumb-border:#e5eef9;--slider-glow:rgba(6,182,212,.20);--shadow:0 20px 60px rgba(15,23,42,.12);--radius:24px}
+[data-theme="dark"]{--bg:#07111f;--surface:rgba(11,18,32,.86);--surface-strong:#111a2d;--surface-muted:#162033;--border:rgba(148,163,184,.16);--text:#e5eef9;--muted:#94a3b8;--primary:#22c55e;--primary-2:#06b6d4;--slider-track:#22c55e;--slider-thumb:#22c55e;--slider-thumb-border:#e5eef9;--slider-glow:rgba(34,197,94,.22);--shadow:0 24px 70px rgba(0,0,0,.35)}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg),#091423 140%)}
+.shell{max-width:1500px;margin:0 auto;padding:24px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}.brand h1{margin:0;font-size:clamp(2rem,4vw,3.25rem)}.brand p{margin:8px 0 0;color:var(--muted);max-width:78ch}.theme-toggle{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:12px 16px;border-radius:999px;cursor:pointer}
+.layout{display:grid;grid-template-columns:minmax(380px,560px) 1fr;gap:24px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}.controls,.results{padding:24px}.section-label{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(34,197,94,.14);color:var(--primary);font-weight:700;font-size:.85rem;margin-bottom:16px}.preset-row,.choice-grid,.toggle-row{display:grid;gap:10px}.preset-row{grid-template-columns:repeat(3,1fr);margin-bottom:22px}.choice-grid{grid-template-columns:repeat(2,1fr)}.toggle-row{grid-template-columns:1fr;gap:12px}
+button{font:inherit}.preset,.choice-btn,.mode-btn{border:1px solid var(--border);background:var(--surface-muted);color:var(--text);border-radius:18px;padding:14px 12px;cursor:pointer}.preset.active,.choice-btn.active,.mode-btn.active{border-color:rgba(34,197,94,.65);background:linear-gradient(180deg,rgba(34,197,94,.16),rgba(6,182,212,.08))}.field{padding:18px;border:1px solid var(--border);border-radius:20px;background:var(--surface-strong);margin-bottom:14px}.field-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.field-header label{font-weight:700}.value{display:inline-block;color:var(--primary);font-weight:800}.mode-btn{display:flex;justify-content:space-between;align-items:center;gap:14px;text-align:left;width:100%}.mode-btn .hint{color:var(--muted);font-size:.88rem;line-height:1.35}.mode-btn .state{font-size:.8rem;font-weight:800;color:var(--primary);margin-top:6px}
+.hero-card,.stat,.card{background:var(--surface-strong);border:1px solid var(--border);border-radius:20px}.hero-card{padding:22px 24px;margin-bottom:20px;background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(6,182,212,.10))}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat{padding:18px 20px}.kicker{color:var(--muted);font-size:.88rem;margin-bottom:8px}.big{font-size:clamp(1.15rem,2vw,2rem);font-weight:800}.split{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:20px}.card{padding:20px}.metrics{display:grid;gap:12px}.metric-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}.metric-row:last-child{border-bottom:0}.metric-row span:first-child,.notice{color:var(--muted)}.metric-row strong{font-variant-numeric:tabular-nums}.bar-track{height:14px;border-radius:999px;overflow:visible;background:var(--surface-muted);margin:18px 0 10px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));width:0%}.months{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.month{background:var(--surface-strong);border:1px solid var(--border);border-radius:18px;padding:16px}.month h4{margin:0 0 10px}.month .line{display:flex;justify-content:space-between;gap:10px;font-size:.93rem;margin-top:6px}
+@media (max-width:1100px){.layout,.split{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){.shell{padding:16px}.topbar{flex-direction:column;align-items:stretch}.preset-row,.stats,.months,.choice-grid{grid-template-columns:1fr}}
+
+input.main-slider::-webkit-slider-runnable-track,input.main-slider::-moz-range-track{background:#06b6d4 !important}
+input.main-slider::-webkit-slider-thumb,input.main-slider::-moz-range-thumb{background:#06b6d4 !important}
+[data-theme="dark"] input.heat-slider::-webkit-slider-runnable-track,[data-theme="dark"] input.heat-slider::-moz-range-track{background:#22c55e !important}
+[data-theme="dark"] input.heat-slider::-webkit-slider-thumb,[data-theme="dark"] input.heat-slider::-moz-range-thumb{background:#22c55e !important}
+[data-theme="light"] input.heat-slider::-webkit-slider-runnable-track,[data-theme="light"] input.heat-slider::-moz-range-track{background:#06b6d4 !important}
+[data-theme="light"] input.heat-slider::-webkit-slider-thumb,[data-theme="light"] input.heat-slider::-moz-range-thumb{background:#06b6d4 !important}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <h1>PV Rechner</h1>
+      <p>Grobe Orientierung statt exakter Auslegung.</p>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button">🌙 Theme</button>
+  </div>
+  <div class="layout">
+    <section class="panel controls">
+      <div class="section-label">Eingaben</div>
+      <h2>Anlage konfigurieren</h2>
+      <div class="preset-row">
+        <button class="preset" type="button" data-preset="none">Keine PV</button>
+        <button class="preset" type="button" data-preset="modules">Nur Module</button>
+        <button class="preset active" type="button" data-preset="storage">Mit Speicher</button>
+      </div>
+      <div id="fieldsMain"></div>
+      <div class="section-label">Heizsysteme</div>
+      <div class="toggle-row">
+        <button class="mode-btn active" type="button" data-mode="heatpump"><div><strong>Wärmepumpe</strong><div class="state">aktiv</div><div class="hint">Kosten und Strombedarf sonst 0.</div></div></button>
+        <button class="mode-btn active" type="button" data-mode="district"><div><strong>Fernwärme</strong><div class="state">aktiv</div><div class="hint">Arbeit, CO2 und Grundpreis sonst 0.</div></div></button>
+      </div>
+      <div id="fieldsHeat"></div>
+    </section>
+    <section class="panel results">
+      <div class="hero-card">
+        <h2>Wirtschaftlichkeitsübersicht</h2>
+        <p>Hinweis: Das ist nur eine grobe Berechnung. Die Werte dienen zur Orientierung und ersetzen keine detaillierte Auslegung, Ertragsprognose oder Heizlast-/Tarifanalyse.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="kicker">Jährliche PV-Produktion</div><div class="big" id="production"></div></div>
+        <div class="stat"><div class="kicker">Autarkiegrad</div><div class="big" id="autarkyRate"></div></div>
+        <div class="stat"><div class="kicker">Aktuelle Stromkosten</div><div class="big" id="currentElectricityCost"></div></div>
+        <div class="stat"><div class="kicker">Einspeiseerlös/Jahr</div><div class="big" id="feedInRevenue"></div></div>
+        <div class="stat"><div class="kicker">Ersparnis pro Jahr</div><div class="big" id="annualSavingsTop"></div></div>
+        <div class="stat"><div class="kicker">Amortisation</div><div class="big" id="amortisation"></div></div>
+      </div>
+
+      <div class="split">
+        <div class="card" style="min-height:auto;">
+          <h3>Stromfluss</h3>
+          <div class="metrics compact">
+            <div class="metric-row"><span>Eigenverbrauchsquote</span><strong id="selfUseRate"></strong></div>
+            <div class="metric-row"><span>Selbst genutzter Strom</span><strong id="selfUse"></strong></div>
+            <div class="metric-row"><span>Einspeisung</span><strong id="feedIn"></strong></div>
+            <div class="metric-row"><span>Gesamtverbrauch</span><strong id="totalConsumption"></strong></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" id="selfUseBar"></div></div>
+        </div>
+        <div class="card">
+          <h3>Finanzwerte</h3>
+          <div class="metrics">
+            <div class="metric-row"><span>Strompreis</span><strong id="strompreisOut"></strong></div>
+            <div class="metric-row"><span>Bereitstellungspreis</span><strong id="netzpreisOut"></strong></div>
+            <div class="metric-row"><span>Gesamtverbrauch</span><strong id="totalConsumptionOut"></strong></div>
+            <div class="metric-row"><span>Anteil WP</span><strong id="heatpumpShareOut"></strong></div>
+            <div class="metric-row"><span>Stromkosten ohne PV</span><strong id="withoutPvCostOut"></strong></div>
+          </div>
+<div class="split">
+        <div class="card">
+          <h3>Heizvergleich</h3>
+          <div class="metrics">
+            <div class="metric-row"><span>Wärmepumpe pro Jahr</span><strong id="heatpumpAnnualCost"></strong></div>
+            <div class="metric-row"><span>Fernwärme pro Jahr</span><strong id="districtAnnualCost"></strong></div>
+            <div class="metric-row"><span>Differenz pro Jahr</span><strong id="heatingDelta"></strong></div>
+            <div class="metric-row"><span>WP-Strombedarf</span><strong id="heatpumpDerivedConsumption"></strong></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Wirtschaftlichkeit</h3>
+          <div class="choice-grid" id="orientationButtons"></div>
+          <div id="breakEvenChart" style="height:280px;margin-top:14px;background:rgba(15,23,42,.35);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:8px;"></div><div id="breakEvenFallback" style="display:none;margin-top:8px;color:var(--muted)">Diagramm wird geladen...</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Monatsübersicht</h3>
+        <div class="months" id="months"></div>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+const state={anlageKosten:26000,pvSize:24.5,batterySize:18,houseConsumption:4500,carConsumption:1700,strompreis:0.31,netzpreis:8.5,strompreisSteigerung:0.03,einspeisung:0.08,orientation:[],heatDemand:6213,jaz:3,heatpumpExtraBaseCost:0,districtHeatConsumption:6213,districtHeatWorkPrice:0.1569,districtHeatCo2Cost:64.39,districtHeatBasePrice:506.40,districtHeatMonthlyAbschlagGross:164,heatpumpEnabled:true,districtHeatEnabled:true,batteryEnabled:true};
+const presets={none:{pvSize:0,batterySize:0,anlageKosten:0},modules:{pvSize:24.5,batterySize:0,anlageKosten:17000},storage:{pvSize:24.5,batterySize:18,anlageKosten:26000}};
+const orientationMap={south:1050,east:920,west:920,north:700};
+const monthlyFactors=[{month:'Jan',factor:0.02},{month:'Feb',factor:0.04},{month:'Mär',factor:0.08},{month:'Apr',factor:0.11},{month:'Mai',factor:0.13},{month:'Jun',factor:0.14},{month:'Jul',factor:0.14},{month:'Aug',factor:0.12},{month:'Sep',factor:0.10},{month:'Okt',factor:0.07},{month:'Nov',factor:0.03},{month:'Dez',factor:0.02}];
+const orientationMonthFactors={south:{Jan:1,Feb:1,Mär:1,Apr:1,Mai:1,Jun:1,Jul:1,Aug:1,Sep:1,Okt:1,Nov:1,Dez:1},east:{Jan:.95,Feb:.98,Mär:1,Apr:1.03,Mai:1.03,Jun:1.02,Jul:1.0,Aug:1.0,Sep:.98,Okt:.97,Nov:.95,Dez:.95},west:{Jan:.95,Feb:.98,Mär:1,Apr:1.03,Mai:1.03,Jun:1.02,Jul:1.0,Aug:1.0,Sep:.98,Okt:.97,Nov:.95,Dez:.95},north:{Jan:.7,Feb:.72,Mär:.75,Apr:.78,Mai:.8,Jun:.82,Jul:.82,Aug:.8,Sep:.78,Okt:.75,Nov:.72,Dez:.7}};
+const fmt=(v,d=0)=>new Intl.NumberFormat('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+function safeNum(v, fallback=0){return Number.isFinite(v)?v:fallback}
+function safeMoney(v,d=0,s='€'){return money(safeNum(v,0),d,s)}
+function safeEnergy(v){return energy(safeNum(v,0))}
+function safePercent(v){return percent(safeNum(v,0))}
+
+const money=(v,d=0,s='€')=>`${fmt(v,d)} ${s}`;
+const energy=v=>`${fmt(v,0)} kWh`;
+const percent=v=>`${fmt(v*100,0)} %`;
+function fieldRange(id,label,min,max,step,hint){const cls=['slider']; if(['heatDemand','warmWaterDemand','jaz','heatpumpExtraBaseCost','districtHeatConsumption','districtHeatWorkPrice','districtHeatCo2Cost','districtHeatBasePrice','districtHeatMonthlyAbschlagGross'].includes(id)) cls.push('heat-slider'); else cls.push('main-slider'); return `<div class="field"><div class="field-header"><label for="${id}">${label}</label><span class="value" id="${id}Value"></span></div><input class="${cls.join(' ')}" id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${state[id]}"></div>`}
+function fieldButtons(id,label,opts){return `<div class="field"><div class="field-header"><label>${label}</label><span class="value" id="${id}Value"></span></div><div class="choice-grid">${opts.map(o=>`<button type="button" class="choice-btn ${state[id]===o.value?'active':''}" data-key="${id}" data-value="${o.value}">${o.label}</button>`).join('')}</div></div>`}
+function renderInputs(){document.getElementById('fieldsMain').innerHTML=[fieldRange('anlageKosten','Anlagekosten',0,80000,50,''),fieldRange('pvSize','PV-Leistung',0,50,0.1,''),fieldRange('batterySize','Batterie',0,50,0.1,''),fieldRange('houseConsumption','Hausverbrauch',1000,20000,100,''),fieldRange('carConsumption','Autoverbrauch',0,10000,100,''),fieldRange('strompreis','Strompreis',0.15,1,0.01,''),fieldRange('netzpreis','Bereitstellungspreis',0,20,0.1,''),fieldRange('einspeisung','Einspeisevergütung',0.04,0.20,0.01,''),fieldButtons('orientation','Ausrichtung',[{label:'Nord',value:'north'},{label:'Ost',value:'east'},{label:'Süd',value:'south'},{label:'West',value:'west'}])].join('');document.querySelectorAll('input.slider').forEach(el=>{const min=+el.min,max=+el.max,val=+el.value; const p=((val-min)/(max-min))*100; el.style.setProperty('--slider-fill', p+'%'); el.addEventListener('input',()=>{const p2=((+el.value-min)/(max-min))*100; el.style.setProperty('--slider-fill', p2+'%');});});
+ document.getElementById('fieldsHeat').innerHTML=[fieldRange('heatDemand','Wärmebedarf',2000,30000,100,''),fieldRange('warmWaterDemand','Warmwasser',0,6000,50,''),fieldRange('jaz','JAZ',1.5,6,0.1,''),fieldRange('heatpumpExtraBaseCost','WP Zusatzkosten',0,1000,10,''),fieldRange('districtHeatConsumption','Fernwärmeverbrauch',0,40000,100,''),fieldRange('districtHeatWorkPrice','Arbeitspreis',0,0.4,0.001,''),fieldRange('districtHeatCo2Cost','CO2-Kosten',0,500,1,''),fieldRange('districtHeatBasePrice','Grundpreis',0,1500,10,''),fieldRange('districtHeatMonthlyAbschlagGross','Abschlag',0,400,1,'')].join('');}
+function bind(){document.querySelectorAll('[data-preset]').forEach(btn=>btn.addEventListener('click',()=>{Object.assign(state,presets[btn.dataset.preset]);document.querySelectorAll('.preset').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('input[type="range"]').forEach(inp=>inp.value=state[inp.id]);update()}));
+ document.querySelectorAll('.mode-btn').forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.mode+'Enabled';state[key]=!state[key];btn.classList.toggle('active',state[key]);btn.querySelector('.state').textContent=state[key]?'aktiv':'inaktiv';update()}));
+ document.addEventListener('click',e=>{const btn=e.target.closest('.choice-btn');if(btn&&btn.dataset.key==='orientation'){const v=btn.dataset.value;state.orientation=Array.isArray(state.orientation)?state.orientation:[];const i=state.orientation.indexOf(v);if(i>=0){state.orientation.splice(i,1);btn.classList.remove('active')}else{state.orientation.push(v);btn.classList.add('active')}update();}});
+ document.querySelectorAll('input[type="range"]').forEach(inp=>inp.addEventListener('input',e=>{state[e.target.id]=parseFloat(e.target.value);update()}));
+ document.getElementById('themeToggle').addEventListener('click',()=>{const root=document.documentElement;const next=(root.getAttribute('data-theme')||'dark')==='dark'?'light':'dark';root.setAttribute('data-theme',next);document.getElementById('themeToggle').textContent=next==='dark'?'🌙 Theme':'☀️ Theme';});}
+function calc(){const dirs=(Array.isArray(state.orientation)&&state.orientation.length?state.orientation:[]); const region=dirs.reduce((a,v)=>a+(orientationMap[v]||1050),0)/dirs.length||1050;const hpCons=state.heatpumpEnabled?(state.jaz>0?state.heatDemand/state.jaz:0):0;const total=state.houseConsumption+state.carConsumption+hpCons;const batt=state.batteryEnabled?state.batterySize:0;let selfRate=0.18+batt*0.015;if(state.pvSize>=20)selfRate-=0.05;if(hpCons>3000)selfRate+=0.08;selfRate=Math.max(0,Math.min(selfRate,0.85));const prod=safeNum(state.pvSize,0)*safeNum(region,1050);const selfUse=Math.min(safeNum(prod,0)*safeNum(selfRate,0),safeNum(total,0));const feedIn=prod-selfUse;const currentElectricityCost=Math.max(0,total-selfUse)*state.strompreis+state.netzpreis*12;const withoutPvCost=safeNum(total,0)*safeNum(state.strompreis,0)+safeNum(state.netzpreis,0)*12;const feedRev=safeNum(feedIn,0)*safeNum(state.einspeisung,0);const savings=safeNum(selfUse,0)*safeNum(state.strompreis,0);const benefit=savings+feedRev;const amort=safeNum(benefit,0)>0?safeNum(state.anlageKosten,0)/safeNum(benefit,1):0;const hpAnnual=state.heatpumpEnabled?safeNum(hpCons,0)*safeNum(state.strompreis,0)+safeNum(state.heatpumpExtraBaseCost,0):0;const distAnnual=state.districtHeatEnabled?(safeNum(state.districtHeatConsumption,0)*safeNum(state.districtHeatWorkPrice,0))+safeNum(state.districtHeatCo2Cost,0)+safeNum(state.districtHeatBasePrice,0):0;const annualWithoutPv=state.districtHeatEnabled?distAnnual:hpAnnual;const pvFactor=state.batteryEnabled?0.15:0.08;const pvSizeFactor=Math.min(0.45,safeNum(state.pvSize,0)/50*0.35);const annualSavingsTop=Math.max(0,annualWithoutPv - (annualWithoutPv*(1-(pvFactor+pvSizeFactor))) );const delta=distAnnual-hpAnnual;const months=monthlyFactors.map(m=>({month:m.month,monthlyProduction:prod*m.factor,monthlySelfUse:Math.min(prod*m.factor*selfRate,total/12)}));return{hpCons,total,selfRate,prod,selfUse,feedIn,currentElectricityCost,withoutPvCost,feedRev,amort,benefit,savings,hpAnnual,distAnnual,delta,months,annualSavingsTop}}
+function render(v){document.getElementById('anlageKostenValue').textContent=money(state.anlageKosten,0,'€');document.getElementById('pvSizeValue').textContent=`${fmt(state.pvSize,1)} kWp`;document.getElementById('batterySizeValue').textContent=`${fmt(state.batterySize,1)} kWh`;document.getElementById('houseConsumptionValue').textContent=energy(state.houseConsumption);document.getElementById('carConsumptionValue').textContent=energy(state.carConsumption);document.getElementById('strompreisValue').textContent=money(state.strompreis,2,'€/kWh');document.getElementById('netzpreisValue').textContent=money(state.netzpreis,1,'€/Monat');document.getElementById('einspeisungValue').textContent=money(state.einspeisung,2,'€/kWh');document.getElementById('orientationValue').textContent=(state.orientation||[]).map(v=>({north:'Nord',east:'Ost',south:'Süd',west:'West'})[v]).filter(Boolean).join(', ');document.getElementById('heatDemandValue').textContent=energy(state.heatDemand);document.getElementById('jazValue').textContent=fmt(state.jaz,1);document.getElementById('heatpumpExtraBaseCostValue').textContent=money(state.heatpumpExtraBaseCost,0,'€');document.getElementById('districtHeatConsumptionValue').textContent=energy(state.districtHeatConsumption);document.getElementById('districtHeatWorkPriceValue').textContent=money(state.districtHeatWorkPrice,3,'€/kWh');document.getElementById('districtHeatCo2CostValue').textContent=money(state.districtHeatCo2Cost,0,'€');document.getElementById('districtHeatBasePriceValue').textContent=money(state.districtHeatBasePrice,0,'€');document.getElementById('districtHeatMonthlyAbschlagGrossValue').textContent=money(state.districtHeatMonthlyAbschlagGross,0,'€/Monat');document.getElementById('anlageKostenValue').textContent=money(state.anlageKosten,0,'€');document.getElementById('pvSizeValue').textContent=`${fmt(state.pvSize,1)} kWp`;document.getElementById('batterySizeValue').textContent=`${fmt(state.batterySize,1)} kWh`;document.getElementById('houseConsumptionValue').textContent=energy(state.houseConsumption);document.getElementById('carConsumptionValue').textContent=energy(state.carConsumption);document.getElementById('strompreisValue').textContent=money(state.strompreis,2,'€/kWh');document.getElementById('netzpreisValue').textContent=money(state.netzpreis,1,'€/Monat');document.getElementById('einspeisungValue').textContent=money(state.einspeisung,2,'€/kWh');document.getElementById('orientationValue').textContent=(state.orientation||[]).map(v=>({south:'Süd',east:'Ost',west:'West',north:'Nord'})[v]).filter(Boolean).join(', ');document.getElementById('heatDemandValue').textContent=energy(state.heatDemand);document.getElementById('jazValue').textContent=fmt(state.jaz,1);document.getElementById('heatpumpExtraBaseCostValue').textContent=money(state.heatpumpExtraBaseCost,0,'€');document.getElementById('districtHeatConsumptionValue').textContent=energy(state.districtHeatConsumption);document.getElementById('districtHeatWorkPriceValue').textContent=money(state.districtHeatWorkPrice,3,'€/kWh');document.getElementById('districtHeatCo2CostValue').textContent=money(state.districtHeatCo2Cost,0,'€');document.getElementById('districtHeatBasePriceValue').textContent=money(state.districtHeatBasePrice,0,'€');document.getElementById('districtHeatMonthlyAbschlagGrossValue').textContent=money(state.districtHeatMonthlyAbschlagGross,0,'€/Monat');document.getElementById('production').textContent=safeEnergy(v.prod);document.getElementById('autarkyRate').textContent=v.total?fmt((v.selfUse/v.total)*100,1)+' %':'0 %';document.getElementById('currentElectricityCost').textContent=safeMoney(v.currentElectricityCost,0,'€');document.getElementById('feedInRevenue').textContent=safeMoney(v.feedRev,0,'€');document.getElementById('annualSavingsTop').textContent=safeMoney(v.annualSavingsTop,0,'€');document.getElementById('amortisation').textContent=Number.isFinite(v.amort)?`${fmt(v.amort,1)} Jahre`:'—';document.getElementById('selfUseRate').textContent=safePercent(v.selfRate);document.getElementById('selfUse').textContent=safeEnergy(v.selfUse);document.getElementById('feedIn').textContent=safeEnergy(v.feedIn);document.getElementById('totalConsumption').textContent=safeEnergy(v.total);document.getElementById('strompreisOut').textContent=safeMoney(state.strompreis,2,'€/kWh');document.getElementById('netzpreisOut').textContent=safeMoney(state.netzpreis,1,'€/Monat');document.getElementById('withoutPvCostOut').textContent=safeMoney(v.withoutPvCost,0,'€');document.getElementById('heatpumpAnnualCost').textContent=safeMoney(v.hpAnnual,0,'€');document.getElementById('districtAnnualCost').textContent=safeMoney(v.distAnnual,0,'€');document.getElementById('heatingDelta').textContent=`${safeNum(v.delta,0)>=0?'+':''}${safeMoney(v.delta,0,'€')}`;document.getElementById('heatpumpDerivedConsumption').textContent=safeEnergy(v.hpCons);document.getElementById('totalConsumptionOut').textContent=safeEnergy(v.total);document.getElementById('heatpumpShareOut').textContent=safeEnergy(v.hpCons);document.getElementById('selfUseBar').style.width=`${Math.max(0,Math.min(v.selfRate*100,100))}%`;document.getElementById('months').innerHTML=v.months.map(m=>`<div class="month"><h4>${m.month}</h4><div class="line"><span>Produktion</span><strong>${energy(m.monthlyProduction)}</strong></div><div class="line"><span>Eigenverbrauch</span><strong>${energy(m.monthlySelfUse)}</strong></div></div>`).join('');}
+
+function renderChart(v){const fallback=document.getElementById('breakEvenFallback');const draw=()=>{if(typeof Plotly==='undefined'){if(fallback) fallback.style.display='block';return false;}if(fallback) fallback.style.display='none';const y=(v.yearly||[]).map(d=>safeNum(d.profit,0));const x=(v.yearly||[]).map(d=>d.year);if(!x.length){if(fallback) {fallback.style.display='block'; fallback.textContent='Keine Diagrammdaten vorhanden.';} return false;}const trace={x,y,mode:'lines+markers',line:{color:'#22c55e',width:3},marker:{color:y.map(val=>val>=0?'#22c55e':'#60a5fa'),size:8},name:'Kumulierter Gewinn',hovertemplate:'Jahr %{x}<br>Gewinn %{y:.0f} €<extra></extra>'};const zero={x:[1,20],y:[0,0],mode:'lines',line:{color:'#94a3b8',dash:'dash',width:2},name:'Break-even'};const cs=getComputedStyle(document.documentElement);Plotly.react('breakEvenChart',[trace,zero],{margin:{l:52,r:16,t:10,b:42},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{color:cs.getPropertyValue('--text').trim(),family:'Inter,system-ui,sans-serif'},xaxis:{title:'Jahr',gridcolor:'rgba(148,163,184,.10)',zeroline:false,tickmode:'linear',dtick:1,titlefont:{color:cs.getPropertyValue('--muted').trim()},tickfont:{color:cs.getPropertyValue('--muted').trim()}},yaxis:{title:'Kumulierter Gewinn (€)',gridcolor:'rgba(148,163,184,.10)',zeroline:false,titlefont:{color:cs.getPropertyValue('--muted').trim()},tickfont:{color:cs.getPropertyValue('--muted').trim()}},showlegend:false,displayModeBar:false,hovermode:'x unified'},{responsive:true});const ev=document.getElementById('breakEvenYear');if(ev) ev.textContent=v.breakEven?`${v.breakEven}. Jahr`:'kein Break-even in 20 Jahren';return true;}; if(!draw()){setTimeout(draw,200); setTimeout(draw,700);} }function update(){const v=calc();render(v);renderChart(v);window.__pv_update=update}
+renderInputs();bind();window.__pv_update=update;update();
+</script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script>window.addEventListener('load',()=>{if(window.__pv_update) window.__pv_update();});</script></body>
+</htmlinput.slider{-webkit-appearance:none !important;appearance:none !important;background:transparent !important;}
+input.slider::-webkit-slider-runnable-track{height:8px !important;border-radius:999px !important;background:transparent !important;border:1px solid var(--border) !important;}
+input.slider::-webkit-slider-thumb{-webkit-appearance:none !important;appearance:none !important;width:18px !important;height:18px !important;border-radius:50% !important;border:2px solid var(--slider-thumb-border) !important;box-shadow:0 0 0 3px var(--slider-glow) !important;margin-top:-6px !important;}
+[data-theme="dark"] input.slider::-webkit-slider-thumb{background:#22c55e !important;}
+[data-theme="light"] input.slider::-webkit-slider-thumb{background:#06b6d4 !important;}
+[data-theme="dark"] input.slider::-webkit-slider-runnable-track{background:linear-gradient(90deg,#22c55e 0%,#22c55e var(--slider-fill,50%),rgba(255,255,255,.15) var(--slider-fill,50%),rgba(255,255,255,.15) 100%) !important;}
+[data-theme="light"] input.slider::-webkit-slider-runnable-track{background:linear-gradient(90deg,#06b6d4 0%,#06b6d4 var(--slider-fill,50%),rgba(15,23,42,.16) var(--slider-fill,50%),rgba(15,23,42,.16) 100%) !important;}
+input.slider::-moz-range-thumb{width:18px !important;height:18px !important;border-radius:50% !important;border:2px solid var(--slider-thumb-border) !important;box-shadow:0 0 0 3px var(--slider-glow) !important;}
+[data-theme="dark"] input.slider::-moz-range-thumb{background:#22c55e !important;}
+[data-theme="light"] input.slider::-moz-range-thumb{background:#06b6d4 !important;}
+[data-theme="dark"] input.slider::-moz-range-track{background:rgba(255,255,255,.15) !important;}
+[data-theme="light"] input.slider::-moz-range-track{background:rgba(15,23,42,.16) !important;}
+>
