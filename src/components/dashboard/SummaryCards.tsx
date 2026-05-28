@@ -6,11 +6,10 @@ import {
   Battery,
   Euro,
   TrendingUp,
-  Home,
-  BarChart3,
   Clock,
   Zap,
   Flame,
+  BarChart3,
 } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,19 +32,6 @@ export function SummaryCards() {
   const { simulationResult, simulationRunning, districtHeating, heatPump } =
     useSimulationStore();
   const s = simulationResult?.summary;
-
-  if (simulationRunning) {
-    return (
-      <div className="col-span-full flex items-center justify-center py-20">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
-          <p className="text-sm text-white/50">
-            Berechne Wirtschaftlichkeit...
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   if (!s) {
     return (
@@ -157,38 +143,49 @@ export function SummaryCards() {
   ];
 
   return (
-    <motion.div
-      variants={container}
-      initial="hidden"
-      animate="show"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    >
-      {cards.map((card, i) => (
-        <motion.div key={i} variants={item}>
-          <Card className="group hover:border-white/20 transition-all duration-300 cursor-default">
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div
-                  className={`rounded-xl p-2.5 ${card.iconBg} border border-white/5`}
-                >
-                  <card.icon
-                    className={`h-5 w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
-                  />
+    <div className="relative">
+      {simulationRunning && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm rounded-xl">
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+          </div>
+        </div>
+      )}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-opacity duration-200 ${
+          simulationRunning ? "opacity-50" : "opacity-100"
+        }`}
+      >
+        {cards.map((card, i) => (
+          <motion.div key={i} variants={item}>
+            <Card className="group hover:border-white/20 transition-all duration-300 cursor-default">
+              <CardContent className="p-5">
+                <div className="flex items-start justify-between mb-3">
+                  <div
+                    className={`rounded-xl p-2.5 ${card.iconBg} border border-white/5`}
+                  >
+                    <card.icon
+                      className={`h-5 w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                    />
+                  </div>
                 </div>
-              </div>
-              <p className="text-xs font-medium text-white/50 uppercase tracking-wider mb-1">
-                {card.label}
-              </p>
-              <p
-                className={`text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
-              >
-                {card.value}
-              </p>
-              <p className="text-xs text-white/40 mt-1">{card.sub}</p>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
-    </motion.div>
+                <p className="text-xs font-medium text-white/50 uppercase tracking-wider mb-1">
+                  {card.label}
+                </p>
+                <p
+                  className={`text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
+                >
+                  {card.value}
+                </p>
+                <p className="text-xs text-white/40 mt-1">{card.sub}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
   );
 }
