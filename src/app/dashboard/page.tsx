@@ -27,7 +27,7 @@ export default function DashboardPage() {
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        darkMode ? "bg-slate-950 text-white" : "bg-white text-slate-950"
+        darkMode ? "bg-slate-950 text-white" : "bg-white text-slate-900"
       } selection:bg-emerald-500/30`}
     >
       {/* Background Effects */}
@@ -49,7 +49,7 @@ export default function DashboardPage() {
           className="mb-8"
         >
           <h2 className="text-2xl font-bold">Dashboard</h2>
-          <p className="text-sm opacity-50 mt-1">
+          <p className={`text-sm mt-1 ${darkMode ? "text-white/50" : "text-slate-600"}`}>
             PV-Wirtschaftlichkeitsanalyse – alle Werte reagieren in Echtzeit
           </p>
         </motion.div>

@@ -144,7 +144,7 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
   selectedHeaterType: "district-heating",
   heatpumpEnabled: false,
   districtHeatEnabled: true,
-  darkMode: false,
+  darkMode: true,
 
   setPVSystem: (pv) =>
     set((state) => ({ pvSystem: { ...state.pvSystem, ...pv } })),
