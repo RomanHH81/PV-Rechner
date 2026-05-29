@@ -29,7 +29,7 @@ const item = {
 };
 
 export function SummaryCards() {
-  const { simulationResult, simulationRunning, districtHeating, heatPump, darkMode } =
+  const { simulationResult, simulationRunning, districtHeating, heatPump } =
     useSimulationStore();
   const s = simulationResult?.summary;
 
@@ -62,7 +62,6 @@ export function SummaryCards() {
       value: `${formatNumber(s.yearlyProduction, 0)} kWh`,
       sub: `Eigenverbrauch: ${formatNumber(s.selfConsumption, 0)} kWh (${formatNumber(s.selfConsumptionRate, 1)}%)`,
       color: "from-amber-400 to-emerald-500",
-      iconBg: "bg-emerald-500/20",
       double: true,
     },
     {
@@ -71,7 +70,6 @@ export function SummaryCards() {
       value: `${formatNumber(Math.min(s.autarkyRate, 100), 1)}%`,
       sub: `${formatNumber(s.gridPurchase, 0)} kWh / Jahr Netzbezug`,
       color: "from-blue-400 to-cyan-500",
-      iconBg: "bg-blue-500/20",
     },
     {
       icon: Euro,
@@ -79,7 +77,6 @@ export function SummaryCards() {
       value: formatCurrency(savingsFromSelfUse),
       sub: `${formatNumber(s.selfConsumption, 0)} kWh × 30 Cent/kWh`,
       color: "from-emerald-400 to-teal-500",
-      iconBg: "bg-emerald-500/20",
     },
     {
       icon: Zap,
@@ -87,7 +84,6 @@ export function SummaryCards() {
       value: formatCurrency(s.feedInRevenue),
       sub: `${formatNumber(s.gridFeedIn, 0)} kWh eingespeist`,
       color: "from-violet-400 to-purple-500",
-      iconBg: "bg-violet-500/20",
     },
     {
       icon: TrendingUp,
@@ -95,7 +91,6 @@ export function SummaryCards() {
       value: formatCurrency(s.electricityCostsWithPV),
       sub: `Ohne PV: ${formatCurrency(s.electricityCostsWithoutPV)}`,
       color: "from-orange-400 to-amber-500",
-      iconBg: "bg-orange-500/20",
     },
     {
       icon: Flame,
@@ -118,7 +113,6 @@ export function SummaryCards() {
                 ? "Wärmepumpe aktiv"
                 : "Kein Heizsystem aktiv",
       color: "from-rose-400 to-orange-500",
-      iconBg: "bg-rose-500/20",
     },
     {
       icon: Euro,
@@ -126,7 +120,6 @@ export function SummaryCards() {
       value: formatCurrency(s.cumulativeCashflow20y),
       sub: `Investition: ${formatCurrency(s.totalInvestment)}`,
       color: "from-emerald-400 to-green-500",
-      iconBg: "bg-green-500/20",
     },
     {
       icon: Clock,
@@ -138,7 +131,6 @@ export function SummaryCards() {
           ? `Break-Even im Jahr ${s.breakEvenYear}`
           : "Kein Break-Even in 20 J.",
       color: "from-emerald-400 to-emerald-600",
-      iconBg: "bg-emerald-500/20",
     },
   ];
 
@@ -163,18 +155,14 @@ export function SummaryCards() {
           <motion.div key={i} variants={item}>
             <Card className="group hover:border-primary/20 transition-all duration-300 cursor-default">
               <CardContent className="p-3 md:p-5">
-                <div className="flex items-start justify-between mb-2 md:mb-3">
-                  <div
-                    className={`rounded-xl p-2 md:p-2.5 ${card.iconBg} border border-border`}
-                  >
-                    <card.icon
-                      className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
-                    />
-                  </div>
+                <div className="flex items-center gap-2 mb-2 md:mb-3">
+                  <card.icon
+                    className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                  />
+                  <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                    {card.label}
+                  </p>
                 </div>
-                <p className="text-[10px] md:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5 md:mb-1">
-                  {card.label}
-                </p>
                 <p
                   className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
                 >
