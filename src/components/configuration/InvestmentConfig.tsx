@@ -11,7 +11,6 @@ export function InvestmentConfig() {
   const { pvSystem, setPVSystem } = useSimulationStore();
   const trigger = useDebouncedCalculate(150);
 
-  // Gesamtinvestition = Anlage + Wechselrichter + Installation
   const totalInvestment = useMemo(
     () =>
       pvSystem.investmentCost +
@@ -20,16 +19,9 @@ export function InvestmentConfig() {
     [pvSystem.investmentCost, pvSystem.inverterCost, pvSystem.installationCost],
   );
 
-  // Zwei separate Eingabefelder:
-  // investmentCost = Anlagenkosten (gesamt)
-  // installationCost = Rücklagen & Instandhaltung (€/Monat) – wir nutzen installationCost dafür
   const monthlyReserve = pvSystem.installationCost;
-
-  // Lineare Abschreibung über 20 Jahre auf Gesamtinvestition
   const yearlyDepreciation = totalInvestment / 20;
   const monthlyDepreciation = yearlyDepreciation / 12;
-
-  // Monatliche Gesamtbelastung = Abschreibung + Rücklagen
   const totalMonthlyCost = monthlyDepreciation + monthlyReserve;
 
   return (
@@ -41,7 +33,7 @@ export function InvestmentConfig() {
       <Card className="h-full">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-wider text-foreground w-full justify-start">
-            <Euro className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <Euro className="h-5 w-5 text-emerald-500" />
             Investitions- & Rücklagenkosten
           </CardTitle>
         </CardHeader>
@@ -86,13 +78,13 @@ export function InvestmentConfig() {
             </div>
           </div>
 
-          <div className="border-t  pt-4">
-            <div className="p-4 rounded-xl bg-muted/50  space-y-3">
+          <div className="border-t pt-4">
+            <div className="p-4 rounded-xl bg-muted/50 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">
                   Gesamtinvestition (20 Jahre linear)
                 </span>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-foreground">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -104,7 +96,7 @@ export function InvestmentConfig() {
                 <span className="text-xs text-muted-foreground">
                   Abschreibung pro Monat
                 </span>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-foreground">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -117,11 +109,11 @@ export function InvestmentConfig() {
                 <span className="text-xs text-muted-foreground">
                   Instandhaltung & Rücklagen
                 </span>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-foreground">
                   {monthlyReserve} € / Monat
                 </span>
               </div>
-              <div className="flex items-center justify-between pt-2 border-t ">
+              <div className="flex items-center justify-between pt-2 border-t">
                 <span className="text-xs text-foreground font-medium">
                   Gesamtbelastung pro Monat
                 </span>
