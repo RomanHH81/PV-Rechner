@@ -37,7 +37,7 @@ export function PVConfig() {
               type="text"
               value={pvSystem.locationPLZ}
               onChange={(e) => setPVSystem({ locationPLZ: e.target.value })}
-              className="w-full rounded-xl border  bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               placeholder="z.B. 80339"
             />
           </div>
