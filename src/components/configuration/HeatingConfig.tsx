@@ -116,7 +116,7 @@ export function HeatingConfig() {
                   max={40000}
                   step={100}
                   suffix="kWh"
-                  color="orange"
+                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -129,7 +129,7 @@ export function HeatingConfig() {
                   max={400}
                   step={1}
                   suffix="Cent/kWh"
-                  color="orange"
+                  color="emerald"
                 />
                 <SliderField
                   label="CO₂-Kosten"
@@ -142,6 +142,7 @@ export function HeatingConfig() {
                   max={500}
                   step={1}
                   suffix="€"
+                  color="emerald"
                 />
                 <SliderField
                   label="Grundpreis"
@@ -154,6 +155,7 @@ export function HeatingConfig() {
                   max={1500}
                   step={10}
                   suffix="€/Jahr"
+                  color="emerald"
                 />
               </div>
             )}
@@ -238,6 +240,7 @@ export function HeatingConfig() {
                   max={1000}
                   step={10}
                   suffix="€/Jahr"
+                  color="emerald"
                 />
               </div>
             )}
@@ -283,7 +286,7 @@ export function HeatingConfig() {
                   max={500}
                   step={10}
                   suffix="€/Jahr"
-                  color="blue"
+                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -296,7 +299,7 @@ export function HeatingConfig() {
                   max={30}
                   step={0.5}
                   suffix="Cent/kWh"
-                  color="blue"
+                  color="emerald"
                 />
               </div>
             )}
@@ -342,7 +345,7 @@ export function HeatingConfig() {
                   max={500}
                   step={10}
                   suffix="€/Jahr"
-                  color="amber"
+                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -355,7 +358,7 @@ export function HeatingConfig() {
                   max={30}
                   step={0.5}
                   suffix="Cent/kWh"
-                  color="amber"
+                  color="emerald"
                 />
               </div>
             )}
@@ -385,14 +388,7 @@ function SliderField({
   suffix: string;
   color?: string;
 }) {
-  const textColor =
-    color === "orange"
-      ? "text-orange-600 dark:text-orange-400"
-      : color === "emerald"
-        ? "text-emerald-600 dark:text-emerald-400"
-        : color === "blue"
-          ? "text-blue-600 dark:text-blue-400"
-          : "text-amber-600 dark:text-amber-400";
+  const textColor = "text-emerald-600 dark:text-emerald-400";
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs">
