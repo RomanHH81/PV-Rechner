@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, Car, Flame } from "lucide-react";
+import { Zap, Car } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,15 +30,15 @@ export function ConsumptionConfig() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-emerald-400" />
+            <Zap className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             Verbrauch & Tarif
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-white/70">Haushaltsstrom</label>
-              <span className="text-sm font-semibold text-white">
+              <label className="text-sm text-muted-foreground">Haushaltsstrom</label>
+              <span className="text-sm font-semibold text-foreground">
                 {consumption.householdConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -56,11 +56,11 @@ export function ConsumptionConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-white/70 flex items-center gap-1">
+              <label className="text-sm text-muted-foreground flex items-center gap-1">
                 <Car className="h-3.5 w-3.5" />
                 E-Auto
               </label>
-              <span className="text-sm font-semibold text-white">
+              <span className="text-sm font-semibold text-foreground">
                 {consumption.evConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -78,7 +78,7 @@ export function ConsumptionConfig() {
 
           {/* Multi-Select Load Profiles */}
           <div className="space-y-2">
-            <label className="text-sm text-white/70">
+            <label className="text-sm text-muted-foreground">
               Lastprofile (mehrere wählbar)
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -95,8 +95,8 @@ export function ConsumptionConfig() {
                     }}
                     className={`rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       isActive
-                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                        : "bg-white/5 text-white/50 border border-white/5 hover:bg-white/10 hover:text-white/70"
+                        ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
+                        : "bg-background text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     {profile.label}
@@ -107,13 +107,13 @@ export function ConsumptionConfig() {
           </div>
 
           {/* Tariff */}
-          <div className="border-t border-white/10 pt-6 space-y-4">
-            <h4 className="text-sm font-medium text-white/70">Stromtarif</h4>
+          <div className="border-t border-border pt-6 space-y-4">
+            <h4 className="text-sm font-medium text-muted-foreground">Stromtarif</h4>
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-white/70">Strompreis</label>
-                <span className="text-sm font-semibold text-emerald-400">
+                <label className="text-sm text-muted-foreground">Strompreis</label>
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {tariff.electricityPrice.toFixed(1)} Cent/kWh
                 </span>
               </div>
@@ -131,10 +131,10 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-white/70">
+                <label className="text-sm text-muted-foreground">
                   Einspeisevergütung
                 </label>
-                <span className="text-sm font-semibold text-emerald-400">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {tariff.feedInTariff.toFixed(1)} Cent/kWh
                 </span>
               </div>
@@ -152,8 +152,8 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-white/70">Netzentgelte</label>
-                <span className="text-sm font-semibold text-white">
+                <label className="text-sm text-muted-foreground">Netzentgelte</label>
+                <span className="text-sm font-semibold text-foreground">
                   {tariff.gridFees.toFixed(1)} €/Monat
                 </span>
               </div>
@@ -171,10 +171,10 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-white/70">
+                <label className="text-sm text-muted-foreground">
                   Jährliche Steigerung
                 </label>
-                <span className="text-sm font-semibold text-white">
+                <span className="text-sm font-semibold text-foreground">
                   {tariff.annualIncrease.toFixed(1)}%
                 </span>
               </div>

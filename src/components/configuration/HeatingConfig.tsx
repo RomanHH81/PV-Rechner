@@ -24,6 +24,7 @@ export function HeatingConfig() {
     toggleGasHeaterEnabled,
     toggleOilHeaterEnabled,
     simulationResult,
+    darkMode,
   } = useSimulationStore();
 
   const trigger = useDebouncedCalculate(150);
@@ -38,7 +39,7 @@ export function HeatingConfig() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Flame className="h-5 w-5 text-emerald-400" />
+            <Flame className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             Heizsysteme
           </CardTitle>
         </CardHeader>
@@ -46,9 +47,9 @@ export function HeatingConfig() {
           {/* Kostenvergleich */}
           {s && (
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-xs text-white/50">Aktive Heizung</p>
-                <p className="text-sm font-semibold text-emerald-300 mt-1">
+              <div className="p-3 rounded-xl bg-muted border border-border">
+                <p className="text-xs text-muted-foreground">Aktive Heizung</p>
+                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {districtHeating.enabled
                     ? "Fernwärme"
                     : heatPump.enabled
@@ -60,9 +61,9 @@ export function HeatingConfig() {
                           : "Keine"}
                 </p>
               </div>
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-xs text-white/50">Heizkosten/Jahr</p>
-                <p className="text-sm font-semibold text-emerald-300 mt-1">
+              <div className="p-3 rounded-xl bg-muted border border-border">
+                <p className="text-xs text-muted-foreground">Heizkosten/Jahr</p>
+                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {formatCurrency(
                     s.heatingCostsHeatpump > 0
                       ? s.heatingCostsHeatpump
@@ -85,19 +86,19 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 districtHeating.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-white/5 border-white/10 opacity-50"
+                  : "bg-muted border-border opacity-60"
               }`}
             >
-              <span className="font-medium text-sm text-white flex items-center gap-2">
-                <Flame className="h-4 w-4 text-orange-400" />
+              <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                <Flame className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                 Fernwärme{" "}
-                <span className="text-[10px] text-white/40">(Default)</span>
+                <span className="text-[10px] text-muted-foreground">(Default)</span>
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   districtHeating.enabled
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : "bg-white/10 text-white/50"
+                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
                 {districtHeating.enabled ? "aktiv" : "inaktiv"}
@@ -169,18 +170,18 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 heatPump.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-white/5 border-white/10 opacity-50"
+                  : "bg-muted border-border opacity-60"
               }`}
             >
-              <span className="font-medium text-sm text-white flex items-center gap-2">
-                <Snowflake className="h-4 w-4 text-cyan-400" />
+              <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                <Snowflake className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
                 Wärmepumpe
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   heatPump.enabled
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : "bg-white/10 text-white/50"
+                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
                 {heatPump.enabled ? "aktiv" : "inaktiv"}
@@ -253,18 +254,18 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 gasHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-white/5 border-white/10 opacity-50"
+                  : "bg-muted border-border opacity-60"
               }`}
             >
-              <span className="font-medium text-sm text-white flex items-center gap-2">
-                <Fuel className="h-4 w-4 text-blue-400" />
+              <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                <Fuel className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 Gasheizung
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   gasHeater.enabled
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : "bg-white/10 text-white/50"
+                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
                 {gasHeater.enabled ? "aktiv" : "inaktiv"}
@@ -312,18 +313,18 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 oilHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-white/5 border-white/10 opacity-50"
+                  : "bg-muted border-border opacity-60"
               }`}
             >
-              <span className="font-medium text-sm text-white flex items-center gap-2">
-                <Droplets className="h-4 w-4 text-amber-400" />
+              <span className="font-medium text-sm text-foreground flex items-center gap-2">
+                <Droplets className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                 Ölheizung
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   oilHeater.enabled
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : "bg-white/10 text-white/50"
+                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
                 {oilHeater.enabled ? "aktiv" : "inaktiv"}
@@ -387,16 +388,16 @@ function SliderField({
 }) {
   const textColor =
     color === "orange"
-      ? "text-orange-400"
+      ? "text-orange-600 dark:text-orange-400"
       : color === "emerald"
-        ? "text-emerald-400"
+        ? "text-emerald-600 dark:text-emerald-400"
         : color === "blue"
-          ? "text-blue-400"
-          : "text-amber-400";
+          ? "text-blue-600 dark:text-blue-400"
+          : "text-amber-600 dark:text-amber-400";
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs">
-        <span className="text-white/50">{label}</span>
+        <span className="text-muted-foreground">{label}</span>
         <span className={`font-semibold ${textColor}`}>
           {step < 1
             ? value.toFixed(1)
