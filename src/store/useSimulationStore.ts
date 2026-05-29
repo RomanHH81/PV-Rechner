@@ -102,7 +102,6 @@ const defaultTariff: Tariff = {
   baseFee: 100,
   dynamicTariff: false,
 };
-
 // Separate from ConfigState interface to avoid conflicts
 interface SimulationStore extends ConfigState {
   gasHeater: Heater;
