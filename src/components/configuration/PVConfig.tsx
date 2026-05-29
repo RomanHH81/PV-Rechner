@@ -45,7 +45,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">PV-Leistung</label>
-              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-foreground">
                 {pvSystem.pvPower.toFixed(1)} kWp
               </span>
             </div>
@@ -64,7 +64,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Batteriegröße</label>
-              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-foreground">
                 {pvSystem.batteryCapacity.toFixed(1)} kWh
               </span>
             </div>
@@ -83,7 +83,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Modulanzahl</label>
-              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-foreground">
                 {pvSystem.moduleCount}
               </span>
             </div>
@@ -179,7 +179,7 @@ export function PVConfig() {
                       max={90}
                       step={1}
                     />
-                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">{side.tilt}°</span>
+                    <span className="text-xs text-foreground font-medium">{side.tilt}°</span>
                   </div>
 
                   <div>
@@ -194,7 +194,7 @@ export function PVConfig() {
                       max={40}
                       step={1}
                     />
-                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">
+                    <span className="text-xs text-foreground font-medium">
                       {side.moduleCount}
                     </span>
                   </div>
@@ -213,7 +213,7 @@ export function PVConfig() {
                       max={80}
                       step={5}
                     />
-                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">
+                    <span className="text-xs text-foreground font-medium">
                       {side.shading}%
                     </span>
                   </div>

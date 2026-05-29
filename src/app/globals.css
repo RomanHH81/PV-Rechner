@@ -1,27 +1,38 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #020617;
-  --color-foreground: #f8fafc;
+  --color-background: var(--bg-main);
+  --color-foreground: var(--fg-main);
+  --color-muted-foreground: var(--fg-muted);
+  --color-card: var(--bg-card);
+  --color-card-foreground: var(--fg-main);
+  --color-border: var(--border-main);
+  --color-muted: var(--bg-muted);
   --font-sans: var(--font-inter);
   --font-mono: ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-background: #ffffff;
-    --color-foreground: #0f172a;
-  }
+:root {
+  --bg-main: #020617;
+  --fg-main: #f8fafc;
+  --fg-muted: #94a3b8;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --bg-muted: rgba(255, 255, 255, 0.03);
+  --border-main: rgba(255, 255, 255, 0.1);
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+.light {
+  --bg-main: #f1f5f9; /* Soft gray background instead of pure white */
+  --fg-main: #0f172a; /* Dark slate for high contrast text */
+  --fg-muted: #475569;
+  --bg-card: #ffffff; /* White cards on soft gray background */
+  --bg-muted: #f8fafc;
+  --border-main: #e2e8f0;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--bg-main);
+  color: var(--fg-main);
   font-family: var(--font-sans);
 }
 
@@ -36,12 +47,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(128, 128, 128, 0.2);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(128, 128, 128, 0.3);
 }
 
 /* Smooth transitions for all interactive elements */
@@ -51,26 +62,6 @@ input,
 select,
 textarea {
   transition: all 0.2s ease;
-}
-
-/* Animation keyframes */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
 }
 
 /* Hide number input spinners */

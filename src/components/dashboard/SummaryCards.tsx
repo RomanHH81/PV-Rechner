@@ -14,6 +14,8 @@ import {
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency, formatNumber } from "@/lib/utils";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -31,7 +33,15 @@ const item = {
 export function SummaryCards() {
   const { simulationResult, simulationRunning, districtHeating, heatPump, tariff } =
     useSimulationStore();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const s = simulationResult?.summary;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   if (!s) {
     return (
@@ -46,12 +56,10 @@ export function SummaryCards() {
     );
   }
 
-  // Merge production + self consumption into one card
   const savingsFromSelfUse = s.selfConsumption * (tariff.electricityPrice / 100);
   const isDistrict = districtHeating.enabled;
   const isHeatpump = heatPump.enabled;
 
-  // Heating savings: Fernwärme vs Wärmepumpe
   const heatingSavings = s.heatingCostsDistrict - s.heatingCostsHeatpump;
   const heatingSavingsMonthly = heatingSavings / 12;
 
@@ -61,35 +69,35 @@ export function SummaryCards() {
       label: "Produktion & Eigenverbrauch",
       value: `${formatNumber(s.yearlyProduction, 0)} kWh`,
       sub: `Eigenverbrauch: ${formatNumber(s.selfConsumption, 0)} kWh (${formatNumber(s.selfConsumptionRate, 1)}%)`,
-      color: "from-amber-400 to-emerald-500",
+      color: theme === "dark" ? "from-amber-400 to-emerald-500" : "from-amber-600 to-emerald-700",
     },
     {
       icon: Battery,
       label: "Autarkiegrad",
       value: `${formatNumber(Math.min(s.autarkyRate, 100), 1)}%`,
       sub: `${formatNumber(s.gridPurchase, 0)} kWh / Jahr Netzbezug`,
-      color: "from-blue-400 to-cyan-500",
+      color: theme === "dark" ? "from-blue-400 to-cyan-500" : "from-blue-600 to-cyan-700",
     },
     {
       icon: Euro,
       label: "Stromkosten-Ersparnis",
       value: formatCurrency(savingsFromSelfUse),
       sub: `${formatNumber(s.selfConsumption, 0)} kWh × ${tariff.electricityPrice.toFixed(1)} Cent/kWh`,
-      color: "from-emerald-400 to-teal-500",
+      color: theme === "dark" ? "from-emerald-400 to-teal-500" : "from-emerald-600 to-teal-700",
     },
     {
       icon: Zap,
       label: "Einspeisevergütung",
       value: formatCurrency(s.feedInRevenue),
       sub: `${formatNumber(s.gridFeedIn, 0)} kWh eingespeist`,
-      color: "from-violet-400 to-purple-500",
+      color: theme === "dark" ? "from-violet-400 to-purple-500" : "from-violet-600 to-purple-700",
     },
     {
       icon: TrendingUp,
       label: "Stromkosten (mit PV)",
       value: formatCurrency(s.electricityCostsWithPV),
       sub: `Ohne PV: ${formatCurrency(s.electricityCostsWithoutPV)}`,
-      color: "from-orange-400 to-amber-500",
+      color: theme === "dark" ? "from-orange-400 to-amber-500" : "from-orange-600 to-amber-700",
     },
     {
       icon: Flame,
@@ -111,14 +119,14 @@ export function SummaryCards() {
               : heatPump.enabled
                 ? "Wärmepumpe aktiv"
                 : "Kein Heizsystem aktiv",
-      color: "from-rose-400 to-orange-500",
+      color: theme === "dark" ? "from-rose-400 to-orange-500" : "from-rose-600 to-orange-700",
     },
     {
       icon: Euro,
       label: "Cashflow (20 Jahre)",
       value: formatCurrency(s.cumulativeCashflow20y),
       sub: `Investition: ${formatCurrency(s.totalInvestment)}`,
-      color: "from-emerald-400 to-green-500",
+      color: theme === "dark" ? "from-emerald-400 to-green-500" : "from-emerald-600 to-green-700",
     },
     {
       icon: Clock,
@@ -129,7 +137,7 @@ export function SummaryCards() {
         s.breakEvenYear > 0
           ? `Break-Even im Jahr ${s.breakEvenYear}`
           : "Kein Break-Even in 20 J.",
-      color: "from-emerald-400 to-emerald-600",
+      color: theme === "dark" ? "from-emerald-400 to-emerald-600" : "from-emerald-600 to-emerald-800",
     },
   ];
 

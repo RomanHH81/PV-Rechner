@@ -47,7 +47,7 @@ export function HeatingConfig() {
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Aktive Heizung</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-emerald-400 mt-1">
+                <p className="text-sm font-semibold text-foreground mt-1">
                   {districtHeating.enabled
                     ? "Fernwärme"
                     : heatPump.enabled
@@ -61,7 +61,7 @@ export function HeatingConfig() {
               </div>
               <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Heizkosten/Jahr</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-emerald-400 mt-1">
+                <p className="text-sm font-semibold text-foreground mt-1">
                   {formatCurrency(
                     s.heatingCostsHeatpump > 0
                       ? s.heatingCostsHeatpump
@@ -377,7 +377,7 @@ function SliderField({
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs">
         <span className="text-muted-foreground">{label}</span>
-        <span className="font-semibold text-slate-900 dark:text-emerald-400">
+        <span className="font-semibold text-foreground dark:text-emerald-400">
           {step < 1
             ? value.toFixed(1)
             : Math.round(value).toLocaleString("de-DE")}{" "}
