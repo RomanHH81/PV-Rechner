@@ -8,7 +8,7 @@ import "@radix-ui/themes/styles.css";
 export function ThemeProvider({ children, ...props }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider attribute="class" defaultTheme="dark" {...props}>
-      <Theme accentColor="emerald" radius="large">
+      <Theme accentColor="green" radius="large">
         {children}
       </Theme>
     </NextThemesProvider>
