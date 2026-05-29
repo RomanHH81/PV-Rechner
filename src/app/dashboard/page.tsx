@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { useAutoCalculate } from "@/hooks/useAutoCalculate";
@@ -17,10 +17,12 @@ import { useTheme } from "next-themes";
 export default function DashboardPage() {
   const { calculate, simulationResult } = useSimulationStore();
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useAutoCalculate();
 
   useEffect(() => {
+    setMounted(true);
     if (!simulationResult) {
       calculate();
     }
@@ -29,7 +31,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen transition-colors duration-300 bg-[var(--color-background)] text-[var(--gray-12)] selection:bg-emerald-500/30">
       {/* Background Effects (only in dark mode) */}
-      {theme === "dark" && (
+      {mounted && theme === "dark" && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[100px]" />
           <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[100px]" />

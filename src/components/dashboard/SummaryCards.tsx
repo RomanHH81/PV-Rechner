@@ -14,8 +14,6 @@ import {
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency, formatNumber } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -33,15 +31,7 @@ const item = {
 export function SummaryCards() {
   const { simulationResult, simulationRunning, districtHeating, heatPump, tariff } =
     useSimulationStore();
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const s = simulationResult?.summary;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
 
   if (!s) {
     return (
@@ -69,35 +59,35 @@ export function SummaryCards() {
       label: "Produktion & Eigenverbrauch",
       value: `${formatNumber(s.yearlyProduction, 0)} kWh`,
       sub: `Eigenverbrauch: ${formatNumber(s.selfConsumption, 0)} kWh (${formatNumber(s.selfConsumptionRate, 1)}%)`,
-      color: theme === "dark" ? "from-amber-400 to-emerald-500" : "from-amber-600 to-emerald-700",
+      color: "var(--grad-amber-emerald)",
     },
     {
       icon: Battery,
       label: "Autarkiegrad",
       value: `${formatNumber(Math.min(s.autarkyRate, 100), 1)}%`,
       sub: `${formatNumber(s.gridPurchase, 0)} kWh / Jahr Netzbezug`,
-      color: theme === "dark" ? "from-blue-400 to-cyan-500" : "from-blue-600 to-cyan-700",
+      color: "var(--grad-blue-cyan)",
     },
     {
       icon: Euro,
       label: "Stromkosten-Ersparnis",
       value: formatCurrency(savingsFromSelfUse),
       sub: `${formatNumber(s.selfConsumption, 0)} kWh × ${tariff.electricityPrice.toFixed(1)} Cent/kWh`,
-      color: theme === "dark" ? "from-emerald-400 to-teal-500" : "from-emerald-600 to-teal-700",
+      color: "var(--grad-emerald-teal)",
     },
     {
       icon: Zap,
       label: "Einspeisevergütung",
       value: formatCurrency(s.feedInRevenue),
       sub: `${formatNumber(s.gridFeedIn, 0)} kWh eingespeist`,
-      color: theme === "dark" ? "from-violet-400 to-purple-500" : "from-violet-600 to-purple-700",
+      color: "var(--grad-violet-purple)",
     },
     {
       icon: TrendingUp,
       label: "Stromkosten (mit PV)",
       value: formatCurrency(s.electricityCostsWithPV),
       sub: `Ohne PV: ${formatCurrency(s.electricityCostsWithoutPV)}`,
-      color: theme === "dark" ? "from-orange-400 to-amber-500" : "from-orange-600 to-amber-700",
+      color: "var(--grad-orange-amber)",
     },
     {
       icon: Flame,
@@ -119,14 +109,14 @@ export function SummaryCards() {
               : heatPump.enabled
                 ? "Wärmepumpe aktiv"
                 : "Kein Heizsystem aktiv",
-      color: theme === "dark" ? "from-rose-400 to-orange-500" : "from-rose-600 to-orange-700",
+      color: "var(--grad-rose-orange)",
     },
     {
       icon: Euro,
       label: "Cashflow (20 Jahre)",
       value: formatCurrency(s.cumulativeCashflow20y),
       sub: `Investition: ${formatCurrency(s.totalInvestment)}`,
-      color: theme === "dark" ? "from-emerald-400 to-green-500" : "from-emerald-600 to-green-700",
+      color: "var(--grad-emerald-teal)",
     },
     {
       icon: Clock,
@@ -137,7 +127,7 @@ export function SummaryCards() {
         s.breakEvenYear > 0
           ? `Break-Even im Jahr ${s.breakEvenYear}`
           : "Kein Break-Even in 20 J.",
-      color: theme === "dark" ? "from-emerald-400 to-emerald-600" : "from-emerald-600 to-emerald-800",
+      color: "var(--grad-emerald-teal)",
     },
   ];
 
@@ -164,14 +154,26 @@ export function SummaryCards() {
               <CardContent className="p-3 md:p-5 flex flex-col items-start text-left w-full h-full">
                 <div className="flex items-center gap-2 mb-2 md:mb-3 w-full justify-start text-left">
                   <card.icon
-                    className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                    className="h-4 w-4 md:h-5 md:w-5"
+                    style={{ 
+                      color: 'transparent',
+                      backgroundImage: card.color,
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text'
+                    }}
                   />
                   <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider text-left">
                     {card.label}
                   </p>
                 </div>
                 <p
-                  className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent text-left w-full`}
+                  className="text-xl md:text-2xl font-bold text-left w-full"
+                  style={{ 
+                    color: 'transparent',
+                    backgroundImage: card.color,
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text'
+                  }}
                 >
                   {card.value}
                 </p>

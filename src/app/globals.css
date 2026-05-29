@@ -19,15 +19,31 @@
   --bg-card: rgba(255, 255, 255, 0.05);
   --bg-muted: rgba(255, 255, 255, 0.03);
   --border-main: rgba(255, 255, 255, 0.1);
+  
+  /* Gradients */
+  --grad-amber-emerald: linear-gradient(to bottom right, #fbbf24, #10b981);
+  --grad-blue-cyan: linear-gradient(to bottom right, #60a5fa, #06b6d4);
+  --grad-emerald-teal: linear-gradient(to bottom right, #34d399, #14b8a6);
+  --grad-violet-purple: linear-gradient(to bottom right, #a78bfa, #a855f7);
+  --grad-orange-amber: linear-gradient(to bottom right, #fb923c, #fbbf24);
+  --grad-rose-orange: linear-gradient(to bottom right, #fb7185, #fb923c);
 }
 
 .light {
-  --bg-main: #f1f5f9; /* Soft gray background instead of pure white */
-  --fg-main: #0f172a; /* Dark slate for high contrast text */
+  --bg-main: #f1f5f9;
+  --fg-main: #0f172a;
   --fg-muted: #475569;
-  --bg-card: #ffffff; /* White cards on soft gray background */
+  --bg-card: #ffffff;
   --bg-muted: #f8fafc;
   --border-main: #e2e8f0;
+
+  /* Darker Gradients for Light Mode */
+  --grad-amber-emerald: linear-gradient(to bottom right, #d97706, #059669);
+  --grad-blue-cyan: linear-gradient(to bottom right, #2563eb, #0891b2);
+  --grad-emerald-teal: linear-gradient(to bottom right, #059669, #0d9488);
+  --grad-violet-purple: linear-gradient(to bottom right, #7c3aed, #9333ea);
+  --grad-orange-amber: linear-gradient(to bottom right, #ea580c, #d97706);
+  --grad-rose-orange: linear-gradient(to bottom right, #e11d48, #ea580c);
 }
 
 body {
