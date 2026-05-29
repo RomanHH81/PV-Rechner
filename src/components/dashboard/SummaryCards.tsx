@@ -150,33 +150,32 @@ export function SummaryCards() {
         className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 transition-opacity duration-200 ${
           simulationRunning ? "opacity-50" : "opacity-100"
         }`}
-      // ... (rest remains same)
-              {cards.map((card, i) => (
-                <motion.div key={i} variants={item}>
-                  <Card className="group transition-all duration-300 cursor-default shadow-none bg-muted/30 border-none">
-                    <CardContent className="p-3 md:p-5 flex flex-col items-start text-left">
-                      <div className="flex items-center gap-2 mb-2 md:mb-3">
-                        <card.icon
-                          className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
-                        />
-                        <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                          {card.label}
-                        </p>
-                      </div>
-                      <p
-                        className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
-                      >
-                        {card.value}
-                      </p>
-                      <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 md:mt-1">
-                        {card.sub}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-      // ... (rest remains same)
-
+      >
+        {cards.map((card, i) => (
+          <motion.div key={i} variants={item}>
+            <Card className="group hover:border-primary/20 transition-all duration-300 cursor-default">
+              <CardContent className="p-3 md:p-5">
+                <div className="flex items-center gap-2 mb-2 md:mb-3">
+                  <card.icon
+                    className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
+                  />
+                  <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                    {card.label}
+                  </p>
+                </div>
+                <p
+                  className={`text-xl md:text-2xl font-bold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`}
+                >
+                  {card.value}
+                </p>
+                <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 md:mt-1">
+                  {card.sub}
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 }
