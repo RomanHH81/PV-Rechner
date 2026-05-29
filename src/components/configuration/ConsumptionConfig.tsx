@@ -93,10 +93,10 @@ export function ConsumptionConfig() {
                       toggleLoadProfile(profile.value);
                       triggerCalculate();
                     }}
-                    className={`rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                    className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 ${
                       isActive
-                        ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
-                        : "bg-background text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
+                        ? "bg-emerald-600 text-white dark:bg-emerald-500/20 dark:text-emerald-300 shadow-sm"
+                        : "bg-slate-200 text-slate-700 dark:bg-white/5 dark:text-muted-foreground hover:bg-slate-300 dark:hover:bg-white/10"
                     }`}
                   >
                     {profile.label}
