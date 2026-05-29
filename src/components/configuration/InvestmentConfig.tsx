@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { Euro } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDebouncedCalculate } from "@/hooks/useDebounce";
@@ -39,7 +40,8 @@ export function InvestmentConfig() {
     >
       <Card className="h-full">
         <CardHeader>
-          <CardTitle className="text-sm uppercase tracking-wider text-foreground w-full justify-start">
+          <CardTitle className="flex items-center gap-2 text-sm uppercase tracking-wider text-foreground w-full justify-start">
+            <Euro className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             Investitions- & Rücklagenkosten
           </CardTitle>
         </CardHeader>
