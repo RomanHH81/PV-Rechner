@@ -39,7 +39,7 @@ export function InvestmentConfig() {
     >
       <Card className="h-full">
         <CardHeader>
-          <CardTitle className="text-sm uppercase tracking-wider text-foreground">
+          <CardTitle className="text-sm uppercase tracking-wider text-foreground w-full justify-start">
             Investitions- & Rücklagenkosten
           </CardTitle>
         </CardHeader>
