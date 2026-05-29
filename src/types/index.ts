@@ -188,5 +188,4 @@ export interface ConfigState {
   selectedHeaterType: HeaterType;
   heatpumpEnabled: boolean;
   districtHeatEnabled: boolean;
-  darkMode: boolean;
 }
