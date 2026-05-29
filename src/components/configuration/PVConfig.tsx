@@ -120,7 +120,7 @@ export function PVConfig() {
             {pvSystem.roofSides.map((side, index) => (
               <div
                 key={index}
-                className="mb-4 p-4 rounded-xl  bg-muted/30"
+                className="mb-4 p-4 rounded-xl border border-emerald-500/30 bg-muted/30"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-muted-foreground uppercase">
