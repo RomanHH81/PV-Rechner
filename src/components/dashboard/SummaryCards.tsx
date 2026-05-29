@@ -153,9 +153,9 @@ export function SummaryCards() {
       >
         {cards.map((card, i) => (
           <motion.div key={i} variants={item}>
-            <Card className="group hover:border-primary/20 transition-all duration-300 cursor-default">
+            <Card className="group transition-all duration-300 cursor-default">
               <CardContent className="p-3 md:p-5 flex flex-col items-start text-left w-full">
-                <div className="flex items-center gap-2 mb-2 md:mb-3 w-full justify-start">
+                <div className="flex items-center gap-2 mb-2 md:mb-3 w-full justify-start text-left">
                   <card.icon
                     className={`h-4 w-4 md:h-5 md:w-5 bg-gradient-to-br ${card.color} bg-clip-text text-transparent`}
                   />
