@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -13,9 +13,9 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { BarChart3 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatNumber } from "@/lib/utils";
 
 const MONTHS = [
   "Jan",
@@ -33,7 +33,13 @@ const MONTHS = [
 ];
 
 export function ProductionChart() {
-  const { simulationResult, darkMode } = useSimulationStore();
+  const { simulationResult } = useSimulationStore();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const data = useMemo(() => {
     if (!simulationResult?.monthlyResults) return [];
@@ -45,6 +51,10 @@ export function ProductionChart() {
     }));
   }, [simulationResult]);
 
+  if (!mounted) return null;
+
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -54,7 +64,7 @@ export function ProductionChart() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
-            <BarChart3 className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <BarChart3 className="h-5 w-5 text-emerald-500" />
             Monatsproduktion & Verbrauch
           </CardTitle>
         </CardHeader>
@@ -65,29 +75,32 @@ export function ProductionChart() {
                 <BarChart data={data} barGap={2}>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
+                    stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
                   />
                   <XAxis
                     dataKey="month"
-                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
-                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
+                    stroke={isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.4)"}
+                    tick={{ fill: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
                   />
                   <YAxis
-                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
-                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
+                    stroke={isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.4)"}
+                    tick={{ fill: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
                     tickFormatter={(v) => `${v} kWh`}
                   />
                   <Tooltip
                     cursor={false}
                     contentStyle={{
-                      background: darkMode ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
-                      border: darkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
+                      background: isDark ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
+                      border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
                       borderRadius: "12px",
                       backdropFilter: "blur(16px)",
                     }}
-                    labelStyle={{ color: darkMode ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.9)" }}
+                    labelStyle={{ color: isDark ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.9)" }}
                   />
-                  <Legend wrapperStyle={{ fontSize: "12px", color: darkMode ? "white" : "black" }} />
+                  <Legend 
+                    wrapperStyle={{ fontSize: "12px" }}
+                    formatter={(value) => <span style={{ color: isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.7)" }}>{value}</span>}
+                  />
                   <Bar
                     dataKey="Produktion"
                     fill="url(#productionGrad)"

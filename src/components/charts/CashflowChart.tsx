@@ -1,9 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -14,12 +12,19 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 
 export function CashflowChart() {
-  const { simulationResult, darkMode } = useSimulationStore();
+  const { simulationResult } = useSimulationStore();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const data = useMemo(() => {
     if (!simulationResult?.yearlyResults) return [];
@@ -30,6 +35,10 @@ export function CashflowChart() {
     }));
   }, [simulationResult]);
 
+  if (!mounted) return null;
+
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,7 +48,7 @@ export function CashflowChart() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
-            <TrendingUp className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <TrendingUp className="h-5 w-5 text-emerald-500" />
             Cashflow Entwicklung
           </CardTitle>
         </CardHeader>
@@ -62,28 +71,28 @@ export function CashflowChart() {
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
+                    stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
                   />
                   <XAxis
                     dataKey="year"
-                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
-                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 11 }}
+                    stroke={isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.4)"}
+                    tick={{ fill: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 11 }}
                     interval={2}
                   />
                   <YAxis
-                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
-                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 11 }}
+                    stroke={isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.4)"}
+                    tick={{ fill: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 11 }}
                     tickFormatter={(v) => `${(v / 1000).toFixed(0)}k €`}
                   />
                   <Tooltip
                     cursor={false}
                     contentStyle={{
-                      background: darkMode ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
-                      border: darkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
+                      background: isDark ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
+                      border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
                       borderRadius: "12px",
                       backdropFilter: "blur(16px)",
                     }}
-                    labelStyle={{ color: darkMode ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.9)" }}
+                    labelStyle={{ color: isDark ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.9)" }}
                     formatter={(value: any) => [formatCurrency(Number(value))]}
                   />
                   <Area
