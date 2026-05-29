@@ -37,7 +37,7 @@ export function HeatingConfig() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
             <Flame className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             Heizsysteme
           </CardTitle>
