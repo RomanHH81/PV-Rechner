@@ -83,7 +83,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Modulanzahl</label>
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 {pvSystem.moduleCount}
               </span>
             </div>
