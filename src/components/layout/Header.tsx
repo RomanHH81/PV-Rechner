@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sun, Moon, Zap, Calculator } from "lucide-react";
+import { Sun, Moon, Zap } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Button } from "@/components/ui/button";
 
@@ -45,21 +45,6 @@ export function Header() {
         </motion.div>
 
         <div className="flex items-center gap-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border ${
-              darkMode
-                ? "bg-emerald-500/10 border-emerald-500/20"
-                : "bg-emerald-50 border-emerald-200"
-            }`}
-          >
-            <Calculator className="h-3.5 w-3.5 text-emerald-600" />
-            <span className="text-xs font-medium text-emerald-700">
-              Live Berechnung
-            </span>
-          </motion.div>
-
           <Button
             variant="ghost"
             size="icon"
