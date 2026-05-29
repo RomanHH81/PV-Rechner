@@ -32,7 +32,7 @@ const MONTHS = [
 ];
 
 export function ProductionChart() {
-  const { simulationResult } = useSimulationStore();
+  const { simulationResult, darkMode } = useSimulationStore();
 
   const data = useMemo(() => {
     if (!simulationResult?.monthlyResults) return [];
@@ -52,7 +52,7 @@ export function ProductionChart() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">
+          <CardTitle className="text-base text-foreground">
             Monatsproduktion & Verbrauch
           </CardTitle>
         </CardHeader>
@@ -63,28 +63,28 @@ export function ProductionChart() {
                 <BarChart data={data} barGap={2}>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="rgba(255,255,255,0.05)"
+                    stroke={darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}
                   />
                   <XAxis
                     dataKey="month"
-                    stroke="rgba(255,255,255,0.3)"
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }}
+                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
+                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
                   />
                   <YAxis
-                    stroke="rgba(255,255,255,0.3)"
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }}
+                    stroke={darkMode ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.5)"}
+                    tick={{ fill: darkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)", fontSize: 12 }}
                     tickFormatter={(v) => `${v} kWh`}
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "rgba(15,23,42,0.95)",
-                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: darkMode ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
+                      border: darkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
                       borderRadius: "12px",
                       backdropFilter: "blur(16px)",
                     }}
-                    labelStyle={{ color: "rgba(255,255,255,0.9)" }}
+                    labelStyle={{ color: darkMode ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.9)" }}
                   />
-                  <Legend wrapperStyle={{ fontSize: "12px" }} />
+                  <Legend wrapperStyle={{ fontSize: "12px", color: darkMode ? "white" : "black" }} />
                   <Bar
                     dataKey="Produktion"
                     fill="url(#productionGrad)"
@@ -121,7 +121,7 @@ export function ProductionChart() {
               </ResponsiveContainer>
             ) : (
               <div className="h-full flex items-center justify-center">
-                <p className="text-white/30 text-sm">Keine Daten verfügbar</p>
+                <p className="text-muted-foreground text-sm">Keine Daten verfügbar</p>
               </div>
             )}
           </div>
