@@ -96,7 +96,7 @@ export function ConsumptionConfig() {
                     className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 ${
                       isActive
                         ? "bg-emerald-600 text-white dark:bg-emerald-500/20 dark:text-emerald-300 shadow-sm"
-                        : "bg-slate-200 text-slate-700 dark:bg-white/5 dark:text-muted-foreground hover:bg-slate-300 dark:hover:bg-white/10"
+                        : "bg-muted border border-border text-foreground hover:bg-muted/80"
                     }`}
                   >
                     {profile.label}
