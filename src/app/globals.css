@@ -7,9 +7,16 @@
   --font-mono: ui-monospace, monospace;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-background: #ffffff;
+    --color-foreground: #0f172a;
+  }
+}
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 }
 
 body {
