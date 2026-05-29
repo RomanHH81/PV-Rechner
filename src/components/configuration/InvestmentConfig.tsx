@@ -92,7 +92,7 @@ export function InvestmentConfig() {
                 <span className="text-xs text-muted-foreground">
                   Gesamtinvestition (20 Jahre linear)
                 </span>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -104,7 +104,7 @@ export function InvestmentConfig() {
                 <span className="text-xs text-muted-foreground">
                   Abschreibung pro Monat
                 </span>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -117,7 +117,7 @@ export function InvestmentConfig() {
                 <span className="text-xs text-muted-foreground">
                   Instandhaltung & Rücklagen
                 </span>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {monthlyReserve} € / Monat
                 </span>
               </div>

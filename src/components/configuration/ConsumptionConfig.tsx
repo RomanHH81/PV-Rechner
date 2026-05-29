@@ -38,7 +38,7 @@ export function ConsumptionConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Haushaltsstrom</label>
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 {consumption.householdConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -60,7 +60,7 @@ export function ConsumptionConfig() {
                 <Car className="h-3.5 w-3.5" />
                 E-Auto
               </label>
-              <span className="text-sm font-semibold text-foreground">
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 {consumption.evConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -96,7 +96,7 @@ export function ConsumptionConfig() {
                     className={`rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       isActive
                         ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
-                        : "bg-background text-muted-foreground  hover:bg-muted hover:text-foreground"
+                        : "bg-background text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     {profile.label}
@@ -107,7 +107,7 @@ export function ConsumptionConfig() {
           </div>
 
           {/* Tariff */}
-          <div className="border-t  pt-6 space-y-4">
+          <div className="border-t pt-6 space-y-4">
             <h4 className="text-sm font-medium text-muted-foreground">Stromtarif</h4>
 
             <div className="space-y-3">
@@ -153,7 +153,7 @@ export function ConsumptionConfig() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm text-muted-foreground">Netzentgelte</label>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {tariff.gridFees.toFixed(1)} €/Monat
                 </span>
               </div>
@@ -174,7 +174,7 @@ export function ConsumptionConfig() {
                 <label className="text-sm text-muted-foreground">
                   Jährliche Steigerung
                 </label>
-                <span className="text-sm font-semibold text-foreground">
+                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {tariff.annualIncrease.toFixed(1)}%
                 </span>
               </div>
