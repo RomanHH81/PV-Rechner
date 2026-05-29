@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sun, Compass, Plus, Trash2, MapPin } from "lucide-react";
+import { Sun, Plus, Trash2, MapPin } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,7 +22,7 @@ export function PVConfig() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
-            <Sun className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <Sun className="h-5 w-5 text-emerald-500" />
             PV-Anlage
           </CardTitle>
         </CardHeader>
@@ -45,7 +45,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">PV-Leistung</label>
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                 {pvSystem.pvPower.toFixed(1)} kWp
               </span>
             </div>
@@ -64,7 +64,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Batteriegröße</label>
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                 {pvSystem.batteryCapacity.toFixed(1)} kWh
               </span>
             </div>
@@ -83,7 +83,7 @@ export function PVConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Modulanzahl</label>
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                 {pvSystem.moduleCount}
               </span>
             </div>
@@ -100,7 +100,7 @@ export function PVConfig() {
           </div>
 
           {/* Roof Sides */}
-          <div className="border-t  pt-6">
+          <div className="border-t pt-6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-sm font-medium text-muted-foreground">Dachflächen</h4>
               <Button
@@ -158,7 +158,7 @@ export function PVConfig() {
                           className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                             side.azimuth === d.v
                               ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
-                              : "bg-background text-muted-foreground  hover:bg-muted"
+                              : "bg-background text-muted-foreground hover:bg-muted"
                           }`}
                         >
                           {d.l}
@@ -179,7 +179,7 @@ export function PVConfig() {
                       max={90}
                       step={1}
                     />
-                    <span className="text-xs text-muted-foreground">{side.tilt}°</span>
+                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">{side.tilt}°</span>
                   </div>
 
                   <div>
@@ -194,7 +194,7 @@ export function PVConfig() {
                       max={40}
                       step={1}
                     />
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">
                       {side.moduleCount}
                     </span>
                   </div>
@@ -213,7 +213,7 @@ export function PVConfig() {
                       max={80}
                       step={5}
                     />
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-slate-900 dark:text-emerald-400 font-medium">
                       {side.shading}%
                     </span>
                   </div>

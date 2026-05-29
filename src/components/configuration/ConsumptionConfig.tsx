@@ -30,7 +30,7 @@ export function ConsumptionConfig() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
-            <Zap className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <Zap className="h-5 w-5 text-emerald-500" />
             Verbrauch & Tarif
           </CardTitle>
         </CardHeader>
@@ -38,7 +38,7 @@ export function ConsumptionConfig() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm text-muted-foreground">Haushaltsstrom</label>
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                 {consumption.householdConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -60,7 +60,7 @@ export function ConsumptionConfig() {
                 <Car className="h-3.5 w-3.5" />
                 E-Auto
               </label>
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                 {consumption.evConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
@@ -113,7 +113,7 @@ export function ConsumptionConfig() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm text-muted-foreground">Strompreis</label>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                   {tariff.electricityPrice.toFixed(1)} Cent/kWh
                 </span>
               </div>
@@ -134,7 +134,7 @@ export function ConsumptionConfig() {
                 <label className="text-sm text-muted-foreground">
                   Einspeisevergütung
                 </label>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                   {tariff.feedInTariff.toFixed(1)} Cent/kWh
                 </span>
               </div>
@@ -153,7 +153,7 @@ export function ConsumptionConfig() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm text-muted-foreground">Netzentgelte</label>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                   {tariff.gridFees.toFixed(1)} €/Monat
                 </span>
               </div>
@@ -174,7 +174,7 @@ export function ConsumptionConfig() {
                 <label className="text-sm text-muted-foreground">
                   Jährliche Steigerung
                 </label>
-                <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
                   {tariff.annualIncrease.toFixed(1)}%
                 </span>
               </div>

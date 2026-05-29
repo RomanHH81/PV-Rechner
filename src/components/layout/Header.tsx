@@ -2,21 +2,25 @@
 
 import { motion } from "framer-motion";
 import { Sun, Moon, Zap } from "lucide-react";
-import { useSimulationStore } from "@/store/useSimulationStore";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 export function Header() {
-  const { darkMode, toggleDarkMode } = useSimulationStore();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setState] = useState(false);
+
+  useEffect(() => {
+    setState(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={`sticky top-0 z-50 w-full border-b backdrop-blur-2xl ${
-        darkMode
-          ? "border-white/10 bg-slate-950/80"
-          : "border-slate-200 bg-white/80"
-      }`}
+      className="sticky top-0 z-50 w-full border-b backdrop-blur-2xl border-[var(--gray-5)] bg-[var(--color-background)]/80"
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -27,18 +31,10 @@ export function Header() {
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1
-              className={`text-lg font-bold tracking-tight ${
-                darkMode ? "text-white" : "text-slate-900"
-              }`}
-            >
+            <h1 className="text-lg font-bold tracking-tight text-[var(--gray-12)]">
               PV Rechner
             </h1>
-            <p
-              className={`text-[10px] font-medium tracking-wider uppercase ${
-                darkMode ? "text-white/40" : "text-slate-500"
-              }`}
-            >
+            <p className="text-[10px] font-medium tracking-wider uppercase text-[var(--gray-9)]">
               Wirtschaftlichkeitsanalyse
             </p>
           </div>
@@ -48,13 +44,13 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={toggleDarkMode}
-            className="rounded-xl"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="rounded-xl text-[var(--gray-11)]"
           >
-            {darkMode ? (
+            {theme === "dark" ? (
               <Sun className="h-4 w-4 text-yellow-400" />
             ) : (
-              <Moon className="h-4 w-4 text-slate-700" />
+              <Moon className="h-4 w-4" />
             )}
           </Button>
         </div>

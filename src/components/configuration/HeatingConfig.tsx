@@ -23,7 +23,6 @@ export function HeatingConfig() {
     toggleGasHeaterEnabled,
     toggleOilHeaterEnabled,
     simulationResult,
-    darkMode,
   } = useSimulationStore();
 
   const trigger = useDebouncedCalculate(150);
@@ -38,7 +37,7 @@ export function HeatingConfig() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
-            <Flame className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            <Flame className="h-5 w-5 text-emerald-500" />
             Heizsysteme
           </CardTitle>
         </CardHeader>
@@ -48,7 +47,7 @@ export function HeatingConfig() {
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Aktive Heizung</p>
-                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
+                <p className="text-sm font-semibold text-slate-900 dark:text-emerald-400 mt-1">
                   {districtHeating.enabled
                     ? "Fernwärme"
                     : heatPump.enabled
@@ -62,7 +61,7 @@ export function HeatingConfig() {
               </div>
               <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Heizkosten/Jahr</p>
-                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
+                <p className="text-sm font-semibold text-slate-900 dark:text-emerald-400 mt-1">
                   {formatCurrency(
                     s.heatingCostsHeatpump > 0
                       ? s.heatingCostsHeatpump
@@ -85,18 +84,18 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 districtHeating.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted  opacity-60"
+                  : "bg-muted opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
-                <Flame className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                <Flame className="h-4 w-4 text-orange-500" />
                 Fernwärme{" "}
                 <span className="text-[10px] text-muted-foreground">(Default)</span>
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   districtHeating.enabled
-                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                     : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
@@ -116,7 +115,6 @@ export function HeatingConfig() {
                   max={40000}
                   step={100}
                   suffix="kWh"
-                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -129,7 +127,6 @@ export function HeatingConfig() {
                   max={400}
                   step={1}
                   suffix="Cent/kWh"
-                  color="emerald"
                 />
                 <SliderField
                   label="CO₂-Kosten"
@@ -142,7 +139,6 @@ export function HeatingConfig() {
                   max={500}
                   step={1}
                   suffix="€"
-                  color="emerald"
                 />
                 <SliderField
                   label="Grundpreis"
@@ -155,7 +151,6 @@ export function HeatingConfig() {
                   max={1500}
                   step={10}
                   suffix="€/Jahr"
-                  color="emerald"
                 />
               </div>
             )}
@@ -171,17 +166,17 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 heatPump.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted  opacity-60"
+                  : "bg-muted opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
-                <Snowflake className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+                <Snowflake className="h-4 w-4 text-cyan-500" />
                 Wärmepumpe
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   heatPump.enabled
-                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                     : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
@@ -201,7 +196,6 @@ export function HeatingConfig() {
                   max={30000}
                   step={100}
                   suffix="kWh"
-                  color="emerald"
                 />
                 <SliderField
                   label="Warmwasser"
@@ -214,7 +208,6 @@ export function HeatingConfig() {
                   max={6000}
                   step={50}
                   suffix="kWh"
-                  color="emerald"
                 />
                 <SliderField
                   label="JAZ"
@@ -227,7 +220,6 @@ export function HeatingConfig() {
                   max={6}
                   step={0.1}
                   suffix=""
-                  color="emerald"
                 />
                 <SliderField
                   label="Zusatzkosten"
@@ -240,7 +232,6 @@ export function HeatingConfig() {
                   max={1000}
                   step={10}
                   suffix="€/Jahr"
-                  color="emerald"
                 />
               </div>
             )}
@@ -256,17 +247,17 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 gasHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted  opacity-60"
+                  : "bg-muted opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
-                <Fuel className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <Fuel className="h-4 w-4 text-blue-500" />
                 Gasheizung
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   gasHeater.enabled
-                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                     : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
@@ -286,7 +277,6 @@ export function HeatingConfig() {
                   max={500}
                   step={10}
                   suffix="€/Jahr"
-                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -299,7 +289,6 @@ export function HeatingConfig() {
                   max={30}
                   step={0.5}
                   suffix="Cent/kWh"
-                  color="emerald"
                 />
               </div>
             )}
@@ -315,17 +304,17 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 oilHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted  opacity-60"
+                  : "bg-muted opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
-                <Droplets className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                <Droplets className="h-4 w-4 text-amber-500" />
                 Ölheizung
               </span>
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   oilHeater.enabled
-                    ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
                     : "bg-muted-foreground/10 text-muted-foreground"
                 }`}
               >
@@ -345,7 +334,6 @@ export function HeatingConfig() {
                   max={500}
                   step={10}
                   suffix="€/Jahr"
-                  color="emerald"
                 />
                 <SliderField
                   label="Arbeitspreis"
@@ -358,7 +346,6 @@ export function HeatingConfig() {
                   max={30}
                   step={0.5}
                   suffix="Cent/kWh"
-                  color="emerald"
                 />
               </div>
             )}
@@ -377,7 +364,6 @@ function SliderField({
   max,
   step,
   suffix,
-  color = "emerald",
 }: {
   label: string;
   value: number;
@@ -386,14 +372,12 @@ function SliderField({
   max: number;
   step: number;
   suffix: string;
-  color?: string;
 }) {
-  const textColor = "text-emerald-600 dark:text-emerald-400";
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs">
         <span className="text-muted-foreground">{label}</span>
-        <span className={`font-semibold ${textColor}`}>
+        <span className="font-semibold text-slate-900 dark:text-emerald-400">
           {step < 1
             ? value.toFixed(1)
             : Math.round(value).toLocaleString("de-DE")}{" "}

@@ -125,10 +125,8 @@ interface SimulationStore extends ConfigState {
   toggleDistrictHeatEnabled: () => void;
   toggleGasHeaterEnabled: () => void;
   toggleOilHeaterEnabled: () => void;
-  toggleDarkMode: () => void;
   calculate: () => void;
 }
-
 export const useSimulationStore = create<SimulationStore>((set, get) => ({
   pvSystem: defaultPV,
   battery: defaultBattery,
@@ -144,7 +142,6 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
   selectedHeaterType: "district-heating",
   heatpumpEnabled: false,
   districtHeatEnabled: true,
-  darkMode: true,
 
   setPVSystem: (pv) =>
     set((state) => ({ pvSystem: { ...state.pvSystem, ...pv } })),
@@ -235,7 +232,6 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
     set((state) => ({
       oilHeater: { ...state.oilHeater, enabled: !state.oilHeater.enabled },
     })),
-  toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
 
   calculate: () => {
     set({ simulationRunning: true });
