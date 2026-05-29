@@ -46,7 +46,7 @@ export function HeatingConfig() {
           {/* Kostenvergleich */}
           {s && (
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-muted ">
+              <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Aktive Heizung</p>
                 <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {districtHeating.enabled
@@ -60,7 +60,7 @@ export function HeatingConfig() {
                           : "Keine"}
                 </p>
               </div>
-              <div className="p-3 rounded-xl bg-muted ">
+              <div className="p-3 rounded-xl bg-muted border border-emerald-500/30">
                 <p className="text-xs text-muted-foreground">Heizkosten/Jahr</p>
                 <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {formatCurrency(

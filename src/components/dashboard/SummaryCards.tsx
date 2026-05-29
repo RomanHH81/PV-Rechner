@@ -29,7 +29,7 @@ const item = {
 };
 
 export function SummaryCards() {
-  const { simulationResult, simulationRunning, districtHeating, heatPump } =
+  const { simulationResult, simulationRunning, districtHeating, heatPump, tariff } =
     useSimulationStore();
   const s = simulationResult?.summary;
 
@@ -47,7 +47,7 @@ export function SummaryCards() {
   }
 
   // Merge production + self consumption into one card
-  const savingsFromSelfUse = s.selfConsumption * (30 / 100);
+  const savingsFromSelfUse = s.selfConsumption * (tariff.electricityPrice / 100);
   const isDistrict = districtHeating.enabled;
   const isHeatpump = heatPump.enabled;
 
@@ -75,7 +75,7 @@ export function SummaryCards() {
       icon: Euro,
       label: "Stromkosten-Ersparnis",
       value: formatCurrency(savingsFromSelfUse),
-      sub: `${formatNumber(s.selfConsumption, 0)} kWh × 30 Cent/kWh`,
+      sub: `${formatNumber(s.selfConsumption, 0)} kWh × ${tariff.electricityPrice.toFixed(1)} Cent/kWh`,
       color: "from-emerald-400 to-teal-500",
     },
     {
