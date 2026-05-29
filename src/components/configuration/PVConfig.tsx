@@ -21,7 +21,7 @@ export function PVConfig() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
             <Sun className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             PV-Anlage
           </CardTitle>
