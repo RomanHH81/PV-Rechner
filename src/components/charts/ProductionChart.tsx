@@ -12,6 +12,7 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BarChart3 } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatNumber } from "@/lib/utils";
@@ -52,7 +53,8 @@ export function ProductionChart() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="text-base text-foreground">
+          <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
+            <BarChart3 className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             Monatsproduktion & Verbrauch
           </CardTitle>
         </CardHeader>

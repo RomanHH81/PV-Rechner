@@ -13,6 +13,7 @@ import {
   AreaChart,
 } from "recharts";
 import { motion } from "framer-motion";
+import { TrendingUp } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
@@ -37,7 +38,10 @@ export function CashflowChart() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="text-base text-foreground">Cashflow Entwicklung</CardTitle>
+          <CardTitle className="flex items-center gap-2 w-full justify-start text-foreground">
+            <TrendingUp className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+            Cashflow Entwicklung
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-[300px] min-h-[300px] min-w-0">
@@ -72,6 +76,7 @@ export function CashflowChart() {
                     tickFormatter={(v) => `${(v / 1000).toFixed(0)}k €`}
                   />
                   <Tooltip
+                    cursor={false}
                     contentStyle={{
                       background: darkMode ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
                       border: darkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
