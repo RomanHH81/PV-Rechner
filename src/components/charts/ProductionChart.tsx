@@ -76,6 +76,7 @@ export function ProductionChart() {
                     tickFormatter={(v) => `${v} kWh`}
                   />
                   <Tooltip
+                    cursor={false}
                     contentStyle={{
                       background: darkMode ? "rgba(15,23,42,0.95)" : "rgba(255,255,255,0.95)",
                       border: darkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
