@@ -37,7 +37,7 @@ export function PVConfig() {
               type="text"
               value={pvSystem.locationPLZ}
               onChange={(e) => setPVSystem({ locationPLZ: e.target.value })}
-              className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="w-full rounded-xl border  bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               placeholder="z.B. 80339"
             />
           </div>
@@ -100,7 +100,7 @@ export function PVConfig() {
           </div>
 
           {/* Roof Sides */}
-          <div className="border-t border-border pt-6">
+          <div className="border-t  pt-6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-sm font-medium text-muted-foreground">Dachflächen</h4>
               <Button
@@ -120,7 +120,7 @@ export function PVConfig() {
             {pvSystem.roofSides.map((side, index) => (
               <div
                 key={index}
-                className="mb-4 p-4 rounded-xl border border-border bg-muted/30"
+                className="mb-4 p-4 rounded-xl  bg-muted/30"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-muted-foreground uppercase">
@@ -158,7 +158,7 @@ export function PVConfig() {
                           className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                             side.azimuth === d.v
                               ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
-                              : "bg-background text-muted-foreground border border-border hover:bg-muted"
+                              : "bg-background text-muted-foreground  hover:bg-muted"
                           }`}
                         >
                           {d.l}

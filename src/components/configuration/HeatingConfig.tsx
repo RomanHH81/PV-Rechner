@@ -46,7 +46,7 @@ export function HeatingConfig() {
           {/* Kostenvergleich */}
           {s && (
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-muted border border-border">
+              <div className="p-3 rounded-xl bg-muted ">
                 <p className="text-xs text-muted-foreground">Aktive Heizung</p>
                 <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {districtHeating.enabled
@@ -60,7 +60,7 @@ export function HeatingConfig() {
                           : "Keine"}
                 </p>
               </div>
-              <div className="p-3 rounded-xl bg-muted border border-border">
+              <div className="p-3 rounded-xl bg-muted ">
                 <p className="text-xs text-muted-foreground">Heizkosten/Jahr</p>
                 <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 mt-1">
                   {formatCurrency(
@@ -85,7 +85,7 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 districtHeating.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted border-border opacity-60"
+                  : "bg-muted  opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
@@ -169,7 +169,7 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 heatPump.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted border-border opacity-60"
+                  : "bg-muted  opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
@@ -253,7 +253,7 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 gasHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted border-border opacity-60"
+                  : "bg-muted  opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">
@@ -312,7 +312,7 @@ export function HeatingConfig() {
               className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                 oilHeater.enabled
                   ? "bg-emerald-500/10 border-emerald-500/30"
-                  : "bg-muted border-border opacity-60"
+                  : "bg-muted  opacity-60"
               }`}
             >
               <span className="font-medium text-sm text-foreground flex items-center gap-2">

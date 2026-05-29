@@ -96,7 +96,7 @@ export function ConsumptionConfig() {
                     className={`rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       isActive
                         ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
-                        : "bg-background text-muted-foreground border border-border hover:bg-muted hover:text-foreground"
+                        : "bg-background text-muted-foreground  hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     {profile.label}
@@ -107,7 +107,7 @@ export function ConsumptionConfig() {
           </div>
 
           {/* Tariff */}
-          <div className="border-t border-border pt-6 space-y-4">
+          <div className="border-t  pt-6 space-y-4">
             <h4 className="text-sm font-medium text-muted-foreground">Stromtarif</h4>
 
             <div className="space-y-3">
