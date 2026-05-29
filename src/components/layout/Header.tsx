@@ -12,7 +12,11 @@ export function Header() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-2xl"
+      className={`sticky top-0 z-50 w-full border-b backdrop-blur-2xl ${
+        darkMode
+          ? "border-white/10 bg-slate-950/80"
+          : "border-slate-200 bg-white/80"
+      }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -23,10 +27,18 @@ export function Header() {
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white tracking-tight">
+            <h1
+              className={`text-lg font-bold tracking-tight ${
+                darkMode ? "text-white" : "text-slate-900"
+              }`}
+            >
               PV Rechner
             </h1>
-            <p className="text-[10px] font-medium text-white/40 tracking-wider uppercase">
+            <p
+              className={`text-[10px] font-medium tracking-wider uppercase ${
+                darkMode ? "text-white/40" : "text-slate-500"
+              }`}
+            >
               Wirtschaftlichkeitsanalyse
             </p>
           </div>
@@ -36,10 +48,14 @@ export function Header() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
+            className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border ${
+              darkMode
+                ? "bg-emerald-500/10 border-emerald-500/20"
+                : "bg-emerald-50 border-emerald-200"
+            }`}
           >
-            <Calculator className="h-3.5 w-3.5 text-emerald-400" />
-            <span className="text-xs font-medium text-emerald-300">
+            <Calculator className="h-3.5 w-3.5 text-emerald-600" />
+            <span className="text-xs font-medium text-emerald-700">
               Live Berechnung
             </span>
           </motion.div>
@@ -53,7 +69,7 @@ export function Header() {
             {darkMode ? (
               <Sun className="h-4 w-4 text-yellow-400" />
             ) : (
-              <Moon className="h-4 w-4 text-white/60" />
+              <Moon className="h-4 w-4 text-slate-700" />
             )}
           </Button>
         </div>
