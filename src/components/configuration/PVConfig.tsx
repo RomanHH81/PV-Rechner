@@ -21,15 +21,15 @@ export function PVConfig() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sun className="h-5 w-5 text-emerald-400" />
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <Sun className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
             PV-Anlage
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* PLZ */}
           <div className="space-y-2">
-            <label className="text-sm text-white/70 flex items-center gap-1">
+            <label className="text-sm text-muted-foreground flex items-center gap-1">
               <MapPin className="h-3.5 w-3.5" />
               PLZ / Standort
             </label>
@@ -37,15 +37,15 @@ export function PVConfig() {
               type="text"
               value={pvSystem.locationPLZ}
               onChange={(e) => setPVSystem({ locationPLZ: e.target.value })}
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               placeholder="z.B. 80339"
             />
           </div>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-white/70">PV-Leistung</label>
-              <span className="text-sm font-semibold text-emerald-400">
+              <label className="text-sm text-muted-foreground">PV-Leistung</label>
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 {pvSystem.pvPower.toFixed(1)} kWp
               </span>
             </div>
@@ -63,8 +63,8 @@ export function PVConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-white/70">Batteriegröße</label>
-              <span className="text-sm font-semibold text-emerald-400">
+              <label className="text-sm text-muted-foreground">Batteriegröße</label>
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 {pvSystem.batteryCapacity.toFixed(1)} kWh
               </span>
             </div>
@@ -82,8 +82,8 @@ export function PVConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-white/70">Modulanzahl</label>
-              <span className="text-sm font-semibold text-white">
+              <label className="text-sm text-muted-foreground">Modulanzahl</label>
+              <span className="text-sm font-semibold text-foreground">
                 {pvSystem.moduleCount}
               </span>
             </div>
@@ -100,9 +100,9 @@ export function PVConfig() {
           </div>
 
           {/* Roof Sides */}
-          <div className="border-t border-white/10 pt-6">
+          <div className="border-t border-border pt-6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-sm font-medium text-white/70">Dachflächen</h4>
+              <h4 className="text-sm font-medium text-muted-foreground">Dachflächen</h4>
               <Button
                 variant="secondary"
                 size="sm"
@@ -120,10 +120,10 @@ export function PVConfig() {
             {pvSystem.roofSides.map((side, index) => (
               <div
                 key={index}
-                className="mb-4 p-4 rounded-xl border border-white/10 bg-white/5"
+                className="mb-4 p-4 rounded-xl border border-border bg-muted/30"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-white/50 uppercase">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase">
                     Dach {index + 1}
                   </span>
                   {pvSystem.roofSides.length > 1 && (
@@ -132,7 +132,7 @@ export function PVConfig() {
                         removeRoofSide(index);
                         triggerCalculate();
                       }}
-                      className="text-red-400 hover:text-red-300 transition-colors"
+                      className="text-destructive hover:text-destructive/80 transition-colors"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
@@ -141,7 +141,7 @@ export function PVConfig() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs text-white/50">Ausrichtung</label>
+                    <label className="text-xs text-muted-foreground">Ausrichtung</label>
                     <div className="flex gap-1 mt-1">
                       {[
                         { v: 0, l: "S" },
@@ -157,8 +157,8 @@ export function PVConfig() {
                           }}
                           className={`px-2 py-1 rounded text-xs font-medium transition-all ${
                             side.azimuth === d.v
-                              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                              : "bg-white/5 text-white/50 border border-white/5 hover:bg-white/10"
+                              ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
+                              : "bg-background text-muted-foreground border border-border hover:bg-muted"
                           }`}
                         >
                           {d.l}
@@ -168,7 +168,7 @@ export function PVConfig() {
                   </div>
 
                   <div>
-                    <label className="text-xs text-white/50">Neigung</label>
+                    <label className="text-xs text-muted-foreground">Neigung</label>
                     <Slider
                       value={[side.tilt]}
                       onValueChange={([v]) => {
@@ -179,11 +179,11 @@ export function PVConfig() {
                       max={90}
                       step={1}
                     />
-                    <span className="text-xs text-white/50">{side.tilt}°</span>
+                    <span className="text-xs text-muted-foreground">{side.tilt}°</span>
                   </div>
 
                   <div>
-                    <label className="text-xs text-white/50">Module</label>
+                    <label className="text-xs text-muted-foreground">Module</label>
                     <Slider
                       value={[side.moduleCount]}
                       onValueChange={([v]) => {
@@ -194,13 +194,13 @@ export function PVConfig() {
                       max={40}
                       step={1}
                     />
-                    <span className="text-xs text-white/50">
+                    <span className="text-xs text-muted-foreground">
                       {side.moduleCount}
                     </span>
                   </div>
 
                   <div>
-                    <label className="text-xs text-white/50">
+                    <label className="text-xs text-muted-foreground">
                       Verschattung
                     </label>
                     <Slider
@@ -213,7 +213,7 @@ export function PVConfig() {
                       max={80}
                       step={5}
                     />
-                    <span className="text-xs text-white/50">
+                    <span className="text-xs text-muted-foreground">
                       {side.shading}%
                     </span>
                   </div>

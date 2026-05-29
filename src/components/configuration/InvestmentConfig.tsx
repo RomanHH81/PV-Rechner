@@ -39,13 +39,13 @@ export function InvestmentConfig() {
     >
       <Card className="h-full">
         <CardHeader>
-          <CardTitle className="text-sm uppercase tracking-wider text-white/70">
+          <CardTitle className="text-sm uppercase tracking-wider text-foreground">
             Investitions- & Rücklagenkosten
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
           <div>
-            <label className="block text-xs text-white/50 mb-2">
+            <label className="block text-xs text-muted-foreground mb-2">
               Anlagenkosten (gesamt)
             </label>
             <div className="relative">
@@ -56,16 +56,16 @@ export function InvestmentConfig() {
                   setPVSystem({ investmentCost: Number(e.target.value) });
                   trigger();
                 }}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all"
+                className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/40">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
                 €
               </span>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs text-white/50 mb-2">
+            <label className="block text-xs text-muted-foreground mb-2">
               Instandhaltung & Rücklagen (pro Monat)
             </label>
             <div className="relative">
@@ -76,21 +76,21 @@ export function InvestmentConfig() {
                   setPVSystem({ installationCost: Number(e.target.value) });
                   trigger();
                 }}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all"
+                className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white/40">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
                 €/Monat
               </span>
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-4">
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 space-y-3">
+          <div className="border-t border-border pt-4">
+            <div className="p-4 rounded-xl bg-muted/50 border border-border space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-white/50">
+                <span className="text-xs text-muted-foreground">
                   Gesamtinvestition (20 Jahre linear)
                 </span>
-                <span className="text-sm font-semibold text-white">
+                <span className="text-sm font-semibold text-foreground">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -99,10 +99,10 @@ export function InvestmentConfig() {
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-white/50">
+                <span className="text-xs text-muted-foreground">
                   Abschreibung pro Monat
                 </span>
-                <span className="text-sm font-semibold text-white">
+                <span className="text-sm font-semibold text-foreground">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -112,18 +112,18 @@ export function InvestmentConfig() {
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-white/50">
+                <span className="text-xs text-muted-foreground">
                   Instandhaltung & Rücklagen
                 </span>
-                <span className="text-sm font-semibold text-white">
+                <span className="text-sm font-semibold text-foreground">
                   {monthlyReserve} € / Monat
                 </span>
               </div>
-              <div className="flex items-center justify-between pt-2 border-t border-emerald-500/20">
-                <span className="text-xs text-white/70 font-medium">
+              <div className="flex items-center justify-between pt-2 border-t border-border">
+                <span className="text-xs text-foreground font-medium">
                   Gesamtbelastung pro Monat
                 </span>
-                <span className="text-sm font-bold text-emerald-400">
+                <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
@@ -132,7 +132,7 @@ export function InvestmentConfig() {
                   / Monat
                 </span>
               </div>
-              <p className="text-[10px] text-white/30 mt-2">
+              <p className="text-[10px] text-muted-foreground mt-2">
                 Abschreibung:{" "}
                 {new Intl.NumberFormat("de-DE", {
                   style: "currency",
