@@ -13,6 +13,7 @@ import { SummaryCards } from "@/components/dashboard/SummaryCards";
 import { ProductionChart } from "@/components/charts/ProductionChart";
 import { CashflowChart } from "@/components/charts/CashflowChart";
 import { useTheme } from "next-themes";
+import styles from "@/styles/components/Dashboard.module.scss";
 
 export default function DashboardPage() {
   const { calculate, simulationResult } = useSimulationStore();
@@ -29,7 +30,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="min-h-screen transition-colors duration-300 bg-[var(--color-background)] text-[var(--gray-12)] selection:bg-emerald-500/30">
+    <div className={styles.dashboardContainer}>
       {/* Background Effects (only in dark mode) */}
       {mounted && theme === "dark" && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -41,43 +42,50 @@ export default function DashboardPage() {
 
       <Header />
 
-      <main className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <main className={styles.mainContent}>
         {/* Hero */}
-        <motion.div
+        <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 text-left w-full"
+          className={styles.hero}
         >
-          <h2 className="text-2xl font-bold text-[var(--gray-12)]">Dashboard</h2>
-          <p className="text-sm mt-1 text-[var(--gray-10)]">
+          <h1>Dashboard</h1>
+          <p>
             PV-Wirtschaftlichkeitsanalyse – alle Werte reagieren in Echtzeit
           </p>
-        </motion.div>
+        </motion.header>
 
         {/* Results Summary */}
-        <div className="mb-8">
+        <section aria-labelledby="summary-heading" className="mb-8">
+          <h2 id="summary-heading" className="sr-only">Zusammenfassung der Ergebnisse</h2>
           <SummaryCards />
-        </div>
+        </section>
 
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <section aria-labelledby="charts-heading" className={styles.chartsRow}>
+          <h2 id="charts-heading" className="sr-only">Grafische Auswertungen</h2>
           <ProductionChart />
           <CashflowChart />
-        </div>
+        </section>
 
         {/* Configuration – Left column: Investment + Verbrauch | Right: PV */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="space-y-6">
+        <div className={styles.configGrid}>
+          <section aria-labelledby="config-finance-heading" className="space-y-6">
+            <h2 id="config-finance-heading" className="sr-only">Finanzen & Verbrauch</h2>
             <InvestmentConfig />
             <ConsumptionConfig />
-          </div>
-          <div className="space-y-6">
+          </section>
+          <section aria-labelledby="config-pv-heading" className="space-y-6">
+            <h2 id="config-pv-heading" className="sr-only">Photovoltaik-Konfiguration</h2>
             <PVConfig />
-          </div>
+          </section>
         </div>
 
         {/* Heating Config (full width) */}
-        <HeatingConfig />
+        <section aria-labelledby="config-heating-heading">
+          <h2 id="config-heating-heading" className="sr-only">Heizsystem-Konfiguration</h2>
+          <HeatingConfig />
+        </section>
       </main>
     </div>
   );

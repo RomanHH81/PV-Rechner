@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pv-rechner-pro.vercel.app/sitemap.xml

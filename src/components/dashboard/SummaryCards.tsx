@@ -150,11 +150,11 @@ export function SummaryCards() {
       >
         {cards.map((card, i) => (
           <motion.div key={i} variants={item}>
-            <Card className="group hover:border-primary/20 transition-all duration-300 cursor-default h-full">
-              <CardContent className="p-3 md:p-5 flex flex-col items-start text-left w-full h-full">
+            <Card className="group transition-all duration-300 cursor-default h-full border border-border bg-card">
+              <CardContent className="p-4 sm:p-5 flex flex-col items-start text-left w-full h-full">
                 <div className="flex items-center gap-2 mb-2 md:mb-3 w-full justify-start text-left">
                   <card.icon
-                    className="h-4 w-4 md:h-5 md:w-5"
+                    className="h-4 w-4 md:h-5 md:w-5 shrink-0"
                     style={{ 
                       color: 'transparent',
                       backgroundImage: card.color,
@@ -162,12 +162,12 @@ export function SummaryCards() {
                       WebkitBackgroundClip: 'text'
                     }}
                   />
-                  <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider text-left">
+                  <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider text-left break-words">
                     {card.label}
                   </p>
                 </div>
                 <p
-                  className="text-xl md:text-2xl font-bold text-left w-full"
+                  className="text-lg sm:text-xl md:text-2xl font-bold text-left w-full"
                   style={{ 
                     color: 'transparent',
                     backgroundImage: card.color,
@@ -177,7 +177,7 @@ export function SummaryCards() {
                 >
                   {card.value}
                 </p>
-                <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 md:mt-1 text-left w-full">
+                <p className="text-[10px] md:text-xs text-muted-foreground mt-1 text-left w-full">
                   {card.sub}
                 </p>
               </CardContent>

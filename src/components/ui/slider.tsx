@@ -11,15 +11,18 @@ const Slider = React.forwardRef<
   <SliderPrimitive.Root
     ref={ref}
     className={cn(
-      "relative flex w-full touch-none select-none items-center group",
+      "relative flex w-full touch-none select-none items-center group py-4",
       className,
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-white/10">
-      <SliderPrimitive.Range className="absolute h-full bg-gradient-to-r from-emerald-400 to-emerald-500" />
+    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-[var(--gray-4)] dark:bg-white/10">
+      <SliderPrimitive.Range className="absolute h-full bg-emerald-500" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-emerald-400 bg-white shadow-lg shadow-emerald-500/20 transition-all duration-200 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 active:scale-95" />
+    <SliderPrimitive.Thumb 
+      className="block h-5 w-5 rounded-full border-2 border-emerald-500 bg-white shadow-md transition-transform duration-150 hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] active:scale-95 cursor-pointer" 
+      aria-label="Schieberegler"
+    />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;

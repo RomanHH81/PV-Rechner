@@ -37,12 +37,14 @@ export function ConsumptionConfig() {
         <CardContent className="space-y-6">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">Haushaltsstrom</label>
+              <label htmlFor="household-consumption" className="text-sm text-muted-foreground">Haushaltsstrom</label>
               <span className="text-sm font-semibold text-foreground">
                 {consumption.householdConsumption.toLocaleString("de-DE")} kWh
               </span>
             </div>
             <Slider
+              id="household-consumption"
+              aria-label="Haushaltsstrom in kWh"
               value={[consumption.householdConsumption]}
               onValueChange={([v]) => {
                 setConsumption({ householdConsumption: v });
@@ -56,7 +58,7 @@ export function ConsumptionConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-muted-foreground flex items-center gap-1">
+              <label htmlFor="ev-consumption" className="text-sm text-muted-foreground flex items-center gap-1">
                 <Car className="h-3.5 w-3.5" />
                 E-Auto
               </label>
@@ -65,6 +67,8 @@ export function ConsumptionConfig() {
               </span>
             </div>
             <Slider
+              id="ev-consumption"
+              aria-label="E-Auto Verbrauch in kWh"
               value={[consumption.evConsumption]}
               onValueChange={([v]) => {
                 setConsumption({ evConsumption: v });
@@ -81,7 +85,7 @@ export function ConsumptionConfig() {
             <label className="text-sm text-muted-foreground">
               Lastprofile (mehrere wählbar)
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2" role="group" aria-label="Lastprofile auswählen">
               {loadProfiles.map((profile) => {
                 const isActive = consumption.loadProfiles.includes(
                   profile.value,
@@ -93,6 +97,7 @@ export function ConsumptionConfig() {
                       toggleLoadProfile(profile.value);
                       triggerCalculate();
                     }}
+                    aria-pressed={isActive}
                     className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 ${
                       isActive
                         ? "bg-emerald-600 text-white dark:bg-emerald-500/20 dark:text-emerald-300 shadow-sm"
@@ -108,16 +113,18 @@ export function ConsumptionConfig() {
 
           {/* Tariff */}
           <div className="border-t pt-6 space-y-4">
-            <h4 className="text-sm font-medium text-muted-foreground">Stromtarif</h4>
+            <h3 className="text-sm font-medium text-muted-foreground">Stromtarif</h3>
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-muted-foreground">Strompreis</label>
+                <label htmlFor="electricity-price" className="text-sm text-muted-foreground">Strompreis</label>
                 <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                   {tariff.electricityPrice.toFixed(1)} Cent/kWh
                 </span>
               </div>
               <Slider
+                id="electricity-price"
+                aria-label="Strompreis in Cent pro kWh"
                 value={[tariff.electricityPrice]}
                 onValueChange={([v]) => {
                   setTariff({ electricityPrice: v });
@@ -131,7 +138,7 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-muted-foreground">
+                <label htmlFor="feed-in-tariff" className="text-sm text-muted-foreground">
                   Einspeisevergütung
                 </label>
                 <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
@@ -139,6 +146,8 @@ export function ConsumptionConfig() {
                 </span>
               </div>
               <Slider
+                id="feed-in-tariff"
+                aria-label="Einspeisevergütung in Cent pro kWh"
                 value={[tariff.feedInTariff]}
                 onValueChange={([v]) => {
                   setTariff({ feedInTariff: v });
@@ -152,12 +161,14 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-muted-foreground">Netzentgelte</label>
+                <label htmlFor="grid-fees" className="text-sm text-muted-foreground">Netzentgelte</label>
                 <span className="text-sm font-semibold text-foreground">
                   {tariff.gridFees.toFixed(1)} €/Monat
                 </span>
               </div>
               <Slider
+                id="grid-fees"
+                aria-label="Netzentgelte in Euro pro Monat"
                 value={[tariff.gridFees]}
                 onValueChange={([v]) => {
                   setTariff({ gridFees: v });
@@ -171,7 +182,7 @@ export function ConsumptionConfig() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm text-muted-foreground">
+                <label htmlFor="annual-increase" className="text-sm text-muted-foreground">
                   Jährliche Steigerung
                 </label>
                 <span className="text-sm font-semibold text-foreground">
@@ -179,6 +190,8 @@ export function ConsumptionConfig() {
                 </span>
               </div>
               <Slider
+                id="annual-increase"
+                aria-label="Jährliche Preissteigerung in Prozent"
                 value={[tariff.annualIncrease]}
                 onValueChange={([v]) => {
                   setTariff({ annualIncrease: v });
