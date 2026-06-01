@@ -17,92 +17,86 @@ import type {
 } from "@/types";
 import { runSimulation } from "@/lib/simulation";
 
-const defaultRoofSides: RoofSide[] = [
-  { azimuth: 0, tilt: 30, shading: 10, moduleCount: 12 },
-  { azimuth: 90, tilt: 30, shading: 10, moduleCount: 8 },
-  { azimuth: -90, tilt: 30, shading: 10, moduleCount: 5 },
-];
-
 const defaultPV: PVSystem = {
-  pvPower: 24.5,
-  batteryCapacity: 18,
-  moduleCount: 60,
-  roofSides: defaultRoofSides,
-  locationPLZ: "80339",
-  investmentCost: 20000,
-  inverterCost: 3000,
-  installationCost: 3000,
+  pvPower: 0,
+  batteryCapacity: 0,
+  moduleCount: 0,
+  roofSides: [],
+  locationPLZ: "",
+  investmentCost: 0,
+  inverterCost: 0,
+  installationCost: 0,
 };
 
 const defaultBattery: Battery = {
-  capacity: 18,
-  usableCapacity: 16.2,
+  capacity: 0,
+  usableCapacity: 0,
   efficiency: 0.9,
-  maxChargePower: 5,
-  maxDischargePower: 5,
-  cycleLifetime: 6000,
-  replacementCost: 5000,
+  maxChargePower: 0,
+  maxDischargePower: 0,
+  cycleLifetime: 0,
+  replacementCost: 0,
   strategy: "self-consumption",
 };
 
 const defaultConsumption: ConsumptionProfile = {
-  householdConsumption: 4500,
-  evConsumption: 1000,
+  householdConsumption: 0,
+  evConsumption: 0,
   heatPumpConsumption: 0,
   additionalConsumers: [],
-  loadProfiles: ["standard", "home-office"],
+  loadProfiles: [],
 };
 
 const defaultHeatPump: HeatPump = {
   type: "air",
-  jazz: 3.5,
-  heatDemand: 12000,
-  hotWaterDemand: 2000,
-  electricityConsumption: 4000,
-  baseCosts: 200,
-  workingPrice: 25,
-  investmentCost: 15000,
+  jazz: 0,
+  heatDemand: 0,
+  hotWaterDemand: 0,
+  electricityConsumption: 0,
+  baseCosts: 0,
+  workingPrice: 0,
+  investmentCost: 0,
   enabled: false,
 };
 
 const defaultDistrictHeating: DistrictHeating = {
   enabled: true,
-  heatConsumption: 6213,
-  workPrice: 0.1569,
-  co2Cost: 64.39,
-  basePrice: 506.4,
-  monthlyCharge: 164,
+  heatConsumption: 0,
+  workPrice: 0,
+  co2Cost: 0,
+  basePrice: 0,
+  monthlyCharge: 0,
 };
 
 const defaultGasHeater: Heater = {
   type: "gas",
-  efficiency: 0.9,
-  baseCosts: 150,
-  workingPrice: 12,
-  investmentCost: 8000,
-  co2Factor: 0.24,
+  efficiency: 0,
+  baseCosts: 0,
+  workingPrice: 0,
+  investmentCost: 0,
+  co2Factor: 0,
   enabled: false,
 };
 
 const defaultOilHeater: Heater = {
   type: "pellet",
-  efficiency: 0.85,
-  baseCosts: 200,
-  workingPrice: 10,
-  investmentCost: 10000,
-  co2Factor: 0.32,
+  efficiency: 0,
+  baseCosts: 0,
+  workingPrice: 0,
+  investmentCost: 0,
+  co2Factor: 0,
   enabled: false,
 };
 
 const defaultTariff: Tariff = {
-  electricityPrice: 30,
-  feedInTariff: 8,
-  annualIncrease: 3,
-  gridFees: 10,
-  baseFee: 100,
+  electricityPrice: 0,
+  feedInTariff: 0,
+  annualIncrease: 0,
+  gridFees: 0,
+  baseFee: 0,
   dynamicTariff: false,
 };
-// Separate from ConfigState interface to avoid conflicts
+
 interface SimulationStore extends ConfigState {
   gasHeater: Heater;
   oilHeater: Heater;
@@ -126,6 +120,7 @@ interface SimulationStore extends ConfigState {
   toggleOilHeaterEnabled: () => void;
   calculate: () => void;
 }
+
 export const useSimulationStore = create<SimulationStore>((set, get) => ({
   pvSystem: defaultPV,
   battery: defaultBattery,
@@ -158,7 +153,7 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
         ...state.pvSystem,
         roofSides: [
           ...state.pvSystem.roofSides,
-          { azimuth: 0, tilt: 30, shading: 0, moduleCount: 5 },
+          { azimuth: 0, tilt: 30, shading: 0, moduleCount: 0 },
         ],
       },
     })),
@@ -241,3 +236,4 @@ export const useSimulationStore = create<SimulationStore>((set, get) => ({
     }, 100);
   },
 }));
+
