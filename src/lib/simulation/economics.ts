@@ -221,10 +221,12 @@ export function calculateSummary(
   const firstYear = yearlyResults[0];
 
   let breakEvenYear = 0;
-  for (const r of yearlyResults) {
-    if (r.cumulativeCashflow >= 0) {
-      breakEvenYear = r.year;
-      break;
+  if (totalInvestment > 0) {
+    for (const r of yearlyResults) {
+      if (r.cumulativeCashflow >= 0) {
+        breakEvenYear = r.year;
+        break;
+      }
     }
   }
 
@@ -256,7 +258,7 @@ export function calculateSummary(
     electricityCostsWithoutPV: costsWithoutPV,
     electricityCostsWithPV: firstYear.electricityCosts,
     breakEvenYear,
-    paybackPeriod: breakEvenYear || 20,
+    paybackPeriod: totalInvestment > 0 ? (breakEvenYear || 20) : 0,
     totalInvestment,
     cumulativeCashflow20y:
       yearlyResults[yearlyResults.length - 1].cumulativeCashflow,
