@@ -64,35 +64,35 @@ export function SummaryCards() {
   const cards = [
     {
       icon: Sun,
-      label: "Produktion & Eigenverbrauch",
+      label: "Produktion",
       value: `${formatNumber(s.yearlyProduction, 0)} kWh`,
-      sub: `Eigenverbrauch: ${formatNumber(s.selfConsumption, 0)} kWh (${formatNumber(s.selfConsumptionRate, 1)}%)`,
+      sub: `Eigenverbrauch: ${formatNumber(s.selfConsumptionRate, 1)}%`,
       color: "var(--grad-amber-emerald)",
     },
     {
       icon: Battery,
-      label: "Autarkiegrad",
+      label: "Autarkie",
       value: `${formatNumber(Math.min(s.autarkyRate, 100), 1)}%`,
-      sub: `${formatNumber(s.gridPurchase, 0)} kWh / Jahr Netzbezug`,
+      sub: `${formatNumber(s.gridPurchase, 0)} kWh Netz`,
       color: "var(--grad-blue-cyan)",
     },
     {
       icon: Euro,
-      label: "Stromkosten-Ersparnis",
+      label: "Ersparnis",
       value: formatCurrency(savingsFromSelfUse),
-      sub: `${formatNumber(s.selfConsumption, 0)} kWh × ${tariff.electricityPrice.toFixed(1)} Cent/kWh`,
+      sub: `${tariff.electricityPrice.toFixed(1)} Cent/kWh`,
       color: "var(--grad-emerald-teal)",
     },
     {
       icon: Zap,
-      label: "Einspeisevergütung",
+      label: "Einspeisung",
       value: formatCurrency(s.feedInRevenue),
-      sub: `${formatNumber(s.gridFeedIn, 0)} kWh eingespeist`,
+      sub: `${formatNumber(s.gridFeedIn, 0)} kWh`,
       color: "var(--grad-violet-purple)",
     },
     {
       icon: TrendingUp,
-      label: "Stromkosten (mit PV)",
+      label: "Stromkosten",
       value: formatCurrency(s.electricityCostsWithPV),
       sub: `Ohne PV: ${formatCurrency(s.electricityCostsWithoutPV)}`,
       color: "var(--grad-orange-amber)",
@@ -107,34 +107,22 @@ export function SummaryCards() {
             ? s.heatingCostsHeatpump
             : 0,
       ),
-      sub:
-        isDistrict && heatingSavings > 0
-          ? `Mit WP: ${formatCurrency(s.heatingCostsHeatpump)} (${formatCurrency(heatingSavingsMonthly)}/Monat gespart)`
-          : isHeatpump
-            ? `Gegenüber FW: ${formatCurrency(heatingSavings)}/Jahr günstiger`
-            : districtHeating.enabled
-              ? "Fernwärme aktiv"
-              : heatPump.enabled
-                ? "Wärmepumpe aktiv"
-                : "Kein Heizsystem aktiv",
+      sub: isHeatpump ? "Wärmepumpe" : isDistrict ? "Fernwärme" : "Inaktiv",
       color: "var(--grad-rose-orange)",
     },
     {
       icon: Euro,
-      label: "Cashflow (20 Jahre)",
+      label: "Cashflow",
       value: formatCurrency(s.cumulativeCashflow20y),
-      sub: `Investition: ${formatCurrency(s.totalInvestment)}`,
+      sub: "20 Jahre Gesamt",
       color: "var(--grad-emerald-teal)",
     },
     {
       icon: Clock,
       label: "Amortisation",
       value:
-        s.paybackPeriod > 0 ? `${formatNumber(s.paybackPeriod, 1)} Jahre` : "—",
-      sub:
-        s.breakEvenYear > 0
-          ? `Break-Even im Jahr ${s.breakEvenYear}`
-          : "Kein Break-Even in 20 J.",
+        s.paybackPeriod > 0 ? `${formatNumber(s.paybackPeriod, 1)} J.` : "—",
+      sub: s.breakEvenYear > 0 ? `Jahr ${s.breakEvenYear}` : "Kein Break-Even",
       color: "var(--grad-emerald-teal)",
     },
   ];
@@ -152,19 +140,17 @@ export function SummaryCards() {
         variants={container}
         initial="hidden"
         animate="show"
-        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 transition-opacity duration-200 ${
-          simulationRunning ? "opacity-50" : "opacity-100"
-        }`}
+        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4"
       >
         {cards.map((card, i) => (
           <motion.div key={i} variants={item}>
-            <Card className="group transition-all duration-300 cursor-default h-full border border-border bg-card">
-              <CardContent className="p-4 sm:p-5 h-full">
-                <div className="flex flex-row items-center justify-between w-full h-full gap-4">
-                  {/* Left Side: Icon, Label, Subtext */}
-                  <div className="flex flex-col items-start text-left flex-1 min-w-0">
+            <Card className="group transition-all duration-300 cursor-default border border-border bg-card shadow-sm hover:shadow-md">
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex flex-col items-start gap-1">
+                  {/* Top Row: Icon + Label */}
+                  <div className="flex items-center gap-2 w-full mb-1">
                     <card.icon
-                      className="h-5 w-5 mb-2 shrink-0"
+                      className="h-4 w-4 shrink-0"
                       style={{ 
                         color: 'transparent',
                         backgroundImage: card.color,
@@ -172,28 +158,28 @@ export function SummaryCards() {
                         WebkitBackgroundClip: 'text'
                       }}
                     />
-                    <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5 break-words w-full">
+                    <p className="text-[9px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">
                       {card.label}
                     </p>
-                    <p className="text-[10px] text-muted-foreground break-words w-full opacity-80">
-                      {card.sub}
-                    </p>
                   </div>
-
-                  {/* Right Side: Main Value */}
-                  <div className="flex flex-col items-end text-right shrink-0">
-                    <p
-                      className="text-lg sm:text-xl md:text-2xl font-bold"
-                      style={{ 
-                        color: 'transparent',
-                        backgroundImage: card.color,
-                        backgroundClip: 'text',
-                        WebkitBackgroundClip: 'text'
-                      }}
-                    >
-                      {card.value}
-                    </p>
-                  </div>
+                  
+                  {/* Middle Row: Value */}
+                  <p
+                    className="text-base sm:text-lg md:text-xl font-bold leading-tight"
+                    style={{ 
+                      color: 'transparent',
+                      backgroundImage: card.color,
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text'
+                    }}
+                  >
+                    {card.value}
+                  </p>
+                  
+                  {/* Bottom Row: Subtext */}
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground truncate w-full opacity-70">
+                    {card.sub}
+                  </p>
                 </div>
               </CardContent>
             </Card>
