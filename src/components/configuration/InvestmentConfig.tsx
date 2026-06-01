@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Euro } from "lucide-react";
 import { useSimulationStore } from "@/store/useSimulationStore";
@@ -10,6 +10,50 @@ import { useDebouncedCalculate } from "@/hooks/useDebounce";
 export function InvestmentConfig() {
   const { pvSystem, setPVSystem } = useSimulationStore();
   const trigger = useDebouncedCalculate(150);
+
+  // Local state to handle formatted string input
+  const [displayInvestment, setDisplayInvestment] = useState("");
+  const [displayMaintenance, setDisplayMaintenance] = useState("");
+
+  // Update local state when store changes (e.g. initial load)
+  useEffect(() => {
+    setDisplayInvestment(pvSystem.investmentCost === 0 ? "" : formatGermanNumber(pvSystem.investmentCost));
+    setDisplayMaintenance(pvSystem.installationCost === 0 ? "" : formatGermanNumber(pvSystem.installationCost));
+  }, [pvSystem.investmentCost, pvSystem.installationCost]);
+
+  function formatGermanNumber(val: number): string {
+    return new Intl.NumberFormat("de-DE").format(val);
+  }
+
+  function parseGermanNumber(str: string): number {
+    // Remove all non-digit characters
+    const cleanStr = str.replace(/\D/g, "");
+    return cleanStr === "" ? 0 : parseInt(cleanStr, 10);
+  }
+
+  const handleInvestmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    const numericValue = parseGermanNumber(rawValue);
+    
+    // Update local display with formatting
+    setDisplayInvestment(numericValue === 0 ? "" : formatGermanNumber(numericValue));
+    
+    // Update global store
+    setPVSystem({ investmentCost: numericValue });
+    trigger();
+  };
+
+  const handleMaintenanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    const numericValue = parseGermanNumber(rawValue);
+    
+    // Update local display with formatting
+    setDisplayMaintenance(numericValue === 0 ? "" : formatGermanNumber(numericValue));
+    
+    // Update global store
+    setPVSystem({ installationCost: numericValue });
+    trigger();
+  };
 
   const totalInvestment = useMemo(
     () =>
@@ -44,36 +88,33 @@ export function InvestmentConfig() {
             </label>
             <div className="relative">
               <input
-              type="number"
-              value={pvSystem.investmentCost === 0 ? "" : pvSystem.investmentCost}
-              onChange={(e) => {
-                setPVSystem({ investmentCost: e.target.value === "" ? 0 : Number(e.target.value) });
-                trigger();
-              }}
-              placeholder="z.B. 18500"
-              className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+                type="text"
+                inputMode="numeric"
+                value={displayInvestment}
+                onChange={handleInvestmentChange}
+                placeholder="z.B. 18.500"
+                className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-              €
+                €
               </span>
-              </div>
-              </div>
+            </div>
+          </div>
 
-              <div>
-              <label className="block text-xs text-muted-foreground mb-2">
+          <div>
+            <label className="block text-xs text-muted-foreground mb-2">
               Instandhaltung & Rücklagen (pro Monat)
-              </label>
-              <div className="relative">
+            </label>
+            <div className="relative">
               <input
-              type="number"
-              value={pvSystem.installationCost === 0 ? "" : pvSystem.installationCost}
-              onChange={(e) => {
-                setPVSystem({ installationCost: e.target.value === "" ? 0 : Number(e.target.value) });
-                trigger();
-              }}
-              placeholder="z.B. 30"
-              className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
-              />              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                type="text"
+                inputMode="numeric"
+                value={displayMaintenance}
+                onChange={handleMaintenanceChange}
+                placeholder="z.B. 30"
+                className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
                 €/Monat
               </span>
             </div>
@@ -111,10 +152,10 @@ export function InvestmentConfig() {
                   Instandhaltung & Rücklagen
                 </span>
                 <span className="text-sm font-semibold text-slate-900 dark:text-emerald-400">
-                  {monthlyReserve} € / Monat
+                  {monthlyReserve.toLocaleString("de-DE")} € / Monat
                 </span>
               </div>
-              <div className="flex items-center justify-between pt-2 border-t">
+              <div className="flex items-center justify-between pt-2 border-t border-border">
                 <span className="text-xs text-foreground font-medium">
                   Gesamtbelastung pro Monat
                 </span>
@@ -140,7 +181,7 @@ export function InvestmentConfig() {
                   currency: "EUR",
                   maximumFractionDigits: 2,
                 }).format(monthlyDepreciation)}
-                /Monat + {monthlyReserve} € Rücklagen
+                /Monat + {monthlyReserve.toLocaleString("de-DE")} € Rücklagen
               </p>
             </div>
           </div>
