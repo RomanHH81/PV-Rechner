@@ -44,35 +44,36 @@ export function InvestmentConfig() {
             </label>
             <div className="relative">
               <input
-                type="number"
-                value={pvSystem.investmentCost}
-                onChange={(e) => {
-                  setPVSystem({ investmentCost: Number(e.target.value) });
-                  trigger();
-                }}
-                className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+              type="number"
+              value={pvSystem.investmentCost === 0 ? "" : pvSystem.investmentCost}
+              onChange={(e) => {
+                setPVSystem({ investmentCost: e.target.value === "" ? 0 : Number(e.target.value) });
+                trigger();
+              }}
+              placeholder="0"
+              className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-                €
+              €
               </span>
-            </div>
-          </div>
+              </div>
+              </div>
 
-          <div>
-            <label className="block text-xs text-muted-foreground mb-2">
+              <div>
+              <label className="block text-xs text-muted-foreground mb-2">
               Instandhaltung & Rücklagen (pro Monat)
-            </label>
-            <div className="relative">
+              </label>
+              <div className="relative">
               <input
-                type="number"
-                value={pvSystem.installationCost}
-                onChange={(e) => {
-                  setPVSystem({ installationCost: Number(e.target.value) });
-                  trigger();
-                }}
-                className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+              type="number"
+              value={pvSystem.installationCost === 0 ? "" : pvSystem.installationCost}
+              onChange={(e) => {
+                setPVSystem({ installationCost: e.target.value === "" ? 0 : Number(e.target.value) });
+                trigger();
+              }}
+              placeholder="0"
+              className="w-full rounded-xl border border-emerald-500/30 bg-background px-4 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all"
+              />              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
                 €/Monat
               </span>
             </div>
