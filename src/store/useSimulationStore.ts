@@ -49,42 +49,42 @@ const defaultConsumption: ConsumptionProfile = {
 
 const defaultHeatPump: HeatPump = {
   type: "air",
-  jazz: 0,
-  heatDemand: 0,
-  hotWaterDemand: 0,
-  electricityConsumption: 0,
-  baseCosts: 0,
-  workingPrice: 0,
-  investmentCost: 0,
+  jazz: 3.5,
+  heatDemand: 12000,
+  hotWaterDemand: 2000,
+  electricityConsumption: 4000,
+  baseCosts: 200,
+  workingPrice: 25,
+  investmentCost: 15000,
   enabled: false,
 };
 
 const defaultDistrictHeating: DistrictHeating = {
   enabled: true,
-  heatConsumption: 0,
-  workPrice: 0,
-  co2Cost: 0,
-  basePrice: 0,
-  monthlyCharge: 0,
+  heatConsumption: 6213,
+  workPrice: 0.1569,
+  co2Cost: 64.39,
+  basePrice: 506.4,
+  monthlyCharge: 164,
 };
 
 const defaultGasHeater: Heater = {
   type: "gas",
-  efficiency: 0,
-  baseCosts: 0,
-  workingPrice: 0,
-  investmentCost: 0,
-  co2Factor: 0,
+  efficiency: 0.9,
+  baseCosts: 150,
+  workingPrice: 12,
+  investmentCost: 8000,
+  co2Factor: 0.24,
   enabled: false,
 };
 
 const defaultOilHeater: Heater = {
   type: "pellet",
-  efficiency: 0,
-  baseCosts: 0,
-  workingPrice: 0,
-  investmentCost: 0,
-  co2Factor: 0,
+  efficiency: 0.85,
+  baseCosts: 200,
+  workingPrice: 10,
+  investmentCost: 10000,
+  co2Factor: 0.32,
   enabled: false,
 };
 

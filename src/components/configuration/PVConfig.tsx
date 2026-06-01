@@ -13,6 +13,12 @@ export function PVConfig() {
     useSimulationStore();
   const triggerCalculate = useDebouncedCalculate(150);
 
+  // Auto-update total module count based on roof sides
+  const updateModuleCount = (newSides: any[]) => {
+    const total = newSides.reduce((sum, side) => sum + side.moduleCount, 0);
+    setPVSystem({ moduleCount: total });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -44,10 +50,16 @@ export function PVConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">PV-Leistung</label>
-              <span className="text-sm font-semibold text-foreground">
-                {pvSystem.pvPower.toFixed(1)} kWp
-              </span>
+              <label className="text-sm text-muted-foreground">PV-Leistung (kWp)</label>
+              <input
+                type="number"
+                value={pvSystem.pvPower || ""}
+                onChange={(e) => {
+                  setPVSystem({ pvPower: Number(e.target.value) });
+                  triggerCalculate();
+                }}
+                className="w-20 text-right rounded-lg border border-emerald-500/30 bg-background px-2 py-1 text-emerald-600 dark:text-emerald-400 text-sm font-semibold focus:outline-none"
+              />
             </div>
             <Slider
               value={[pvSystem.pvPower]}
@@ -55,7 +67,7 @@ export function PVConfig() {
                 setPVSystem({ pvPower: v });
                 triggerCalculate();
               }}
-              min={1}
+              min={0}
               max={50}
               step={0.1}
             />
@@ -63,10 +75,16 @@ export function PVConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">Batteriegröße</label>
-              <span className="text-sm font-semibold text-foreground">
-                {pvSystem.batteryCapacity.toFixed(1)} kWh
-              </span>
+              <label className="text-sm text-muted-foreground">Batteriegröße (kWh)</label>
+              <input
+                type="number"
+                value={pvSystem.batteryCapacity || ""}
+                onChange={(e) => {
+                  setPVSystem({ batteryCapacity: Number(e.target.value) });
+                  triggerCalculate();
+                }}
+                className="w-20 text-right rounded-lg border border-emerald-500/30 bg-background px-2 py-1 text-emerald-600 dark:text-emerald-400 text-sm font-semibold focus:outline-none"
+              />
             </div>
             <Slider
               value={[pvSystem.batteryCapacity]}
@@ -82,21 +100,11 @@ export function PVConfig() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-muted-foreground">Modulanzahl</label>
+              <label className="text-sm text-muted-foreground">Modulanzahl (Gesamt)</label>
               <span className="text-sm font-semibold text-foreground">
                 {pvSystem.moduleCount}
               </span>
             </div>
-            <Slider
-              value={[pvSystem.moduleCount]}
-              onValueChange={([v]) => {
-                setPVSystem({ moduleCount: v });
-                triggerCalculate();
-              }}
-              min={4}
-              max={80}
-              step={1}
-            />
           </div>
 
           {/* Roof Sides */}
@@ -130,6 +138,7 @@ export function PVConfig() {
                     <button
                       onClick={() => {
                         removeRoofSide(index);
+                        updateModuleCount(pvSystem.roofSides.filter((_, i) => i !== index));
                         triggerCalculate();
                       }}
                       className="text-destructive hover:text-destructive/80 transition-colors"
@@ -188,6 +197,7 @@ export function PVConfig() {
                       value={[side.moduleCount]}
                       onValueChange={([v]) => {
                         setRoofSide(index, { moduleCount: v });
+                        updateModuleCount(pvSystem.roofSides.map((s, i) => i === index ? { ...s, moduleCount: v } : s));
                         triggerCalculate();
                       }}
                       min={0}
