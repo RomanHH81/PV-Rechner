@@ -14,6 +14,7 @@ import {
 import { useSimulationStore } from "@/store/useSimulationStore";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency, formatNumber } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -31,7 +32,14 @@ const item = {
 export function SummaryCards() {
   const { simulationResult, simulationRunning, districtHeating, heatPump, tariff } =
     useSimulationStore();
+  const [mounted, setMounted] = useState(false);
   const s = simulationResult?.summary;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   if (!s) {
     return (
@@ -151,33 +159,42 @@ export function SummaryCards() {
         {cards.map((card, i) => (
           <motion.div key={i} variants={item}>
             <Card className="group transition-all duration-300 cursor-default h-full border border-border bg-card">
-              <CardContent className="p-4 sm:p-5 flex flex-col items-start text-left w-full h-full">
-                <card.icon
-                  className="h-5 w-5 mb-3 shrink-0"
-                  style={{ 
-                    color: 'transparent',
-                    backgroundImage: card.color,
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text'
-                  }}
-                />
-                <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider text-left break-words mb-1">
-                  {card.label}
-                </p>
-                <p
-                  className="text-lg sm:text-xl md:text-2xl font-bold text-left w-full mb-1"
-                  style={{ 
-                    color: 'transparent',
-                    backgroundImage: card.color,
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text'
-                  }}
-                >
-                  {card.value}
-                </p>
-                <p className="text-[10px] md:text-xs text-muted-foreground text-left w-full">
-                  {card.sub}
-                </p>
+              <CardContent className="p-4 sm:p-5 h-full">
+                <div className="flex flex-row items-center justify-between w-full h-full gap-4">
+                  {/* Left Side: Icon, Label, Subtext */}
+                  <div className="flex flex-col items-start text-left flex-1 min-w-0">
+                    <card.icon
+                      className="h-5 w-5 mb-2 shrink-0"
+                      style={{ 
+                        color: 'transparent',
+                        backgroundImage: card.color,
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text'
+                      }}
+                    />
+                    <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5 break-words w-full">
+                      {card.label}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground break-words w-full opacity-80">
+                      {card.sub}
+                    </p>
+                  </div>
+
+                  {/* Right Side: Main Value */}
+                  <div className="flex flex-col items-end text-right shrink-0">
+                    <p
+                      className="text-lg sm:text-xl md:text-2xl font-bold"
+                      style={{ 
+                        color: 'transparent',
+                        backgroundImage: card.color,
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text'
+                      }}
+                    >
+                      {card.value}
+                    </p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </motion.div>

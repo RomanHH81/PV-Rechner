@@ -2,6 +2,8 @@
 
 .dashboardContainer {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   transition: background-color $transition-speed $transition-ease, color $transition-speed $transition-ease;
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -11,17 +13,16 @@
   position: relative;
   z-index: 10;
   margin: 0 auto;
+  width: 100%;
   max-width: $max-width;
-  padding: 2rem $container-padding;
+  padding: 1.5rem $container-padding;
 
   @media (min-width: 640px) {
-    padding-left: $container-padding-sm;
-    padding-right: $container-padding-sm;
+    padding: 2rem $container-padding-sm;
   }
 
   @media (min-width: 1024px) {
-    padding-left: $container-padding-lg;
-    padding-right: $container-padding-lg;
+    padding: 2.5rem $container-padding-lg;
   }
 }
 
