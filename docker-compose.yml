@@ -8,11 +8,10 @@ services:
       dockerfile: Dockerfile
     image: pv-rechner:latest
     restart: unless-stopped
-    # Wir hängen uns an das bestehende primaflow-Netz, damit
+    # Wir hängen uns an das bestehende proxy-Netz, damit
     # Nginx Proxy Manager den Container per Namen erreichen kann.
-    # Falls das Netz noch nicht existiert, legt Portainer es an.
     networks:
-      - primaflow-net
+      - proxy-net
     healthcheck:
       test:
         [
@@ -36,6 +35,5 @@ services:
           memory: 512M
 
 networks:
-  primaflow-net:
-    name: primaflow-net
-    driver: bridge
+  proxy-net:
+    external: true
